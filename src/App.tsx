@@ -3,7 +3,7 @@ import React from 'react';
 function App() {
   return (
     <div className="App">
-      <p>Hello World.. Just testing my code now...</p>
+      <p>testing if renaming worked in heroku</p>
     </div>
   );
 }
