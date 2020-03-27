@@ -3,7 +3,7 @@ import React from 'react';
 function App() {
   return (
     <div className="App">
-      <p>testing if renaming worked in heroku</p>
+      <p>Lask test to check if selfdeploy works</p>
     </div>
   );
 }
