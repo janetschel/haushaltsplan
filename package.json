@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node backend/server.js",
-    "heroku-postbuild": "cd frontend && npm install && npm run build"
+    "heroku-postbuild": "cd frontend && npm install && npm start"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
