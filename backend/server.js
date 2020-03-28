@@ -38,7 +38,7 @@ MongoClient.connect(
         const app = express();
         app.use(bodyParser.json());
         app.use(cors());
-        app.use(express.static(path.join(__dirname, "../frontend")));
+        app.use(express.static(path.join(__dirname, "../frontend/build")));
 
         app.get("/getDocuments", async (req, res) => {
             const documents = await getDocuments();
