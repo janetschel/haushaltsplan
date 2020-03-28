@@ -40,10 +40,6 @@ MongoClient.connect(
         app.use(cors());
         app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-        if (process.env.NODE_ENV === 'production') {
-            app.use(express.static('../frontend/build'));
-        }
-
         app.get("/getDocuments", async (req, res) => {
             const documents = await getDocuments();
             res.send(documents);
