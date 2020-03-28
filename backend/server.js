@@ -1,11 +1,16 @@
+require('dotenv').config();
+
 const { MongoClient } = require("mongodb");
 const bodyParser = require("body-parser");
 const express = require("express");
 const path = require('path');
 const cors = require("cors");
 
+const dbUser = process.env.MONGODB_USER;
+const dbPassword = process.env.MONGODB_PW;
+
 MongoClient.connect(
-    "mongodb://heroku_1fbr8gq4:o26qee1ctmors9uumhrjt41rg8@ds263460.mlab.com:63460/heroku_1fbr8gq4",
+    `mongodb://${dbUser}:${dbPassword}@ds263460.mlab.com:63460/heroku_1fbr8gq4`,
     { useUnifiedTopology: true },
     (err, client) => {
         if (err) {
