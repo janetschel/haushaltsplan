@@ -3,10 +3,10 @@ import Api from "../api/Api";
 
 function App() {
 
-  const test = () => {
-    console.log("before getDataFromMongoDB");
-    Api.getDataFromMongoDb();
-    console.log("after getDataFromMongoDB");
+  const test = async () => {
+    const response =
+        await Api.addDocument("monday", "Kochen", "Jan", "Jan", false);
+    console.log(response);
   };
 
   test();
