@@ -40,7 +40,7 @@ MongoClient.connect(
         app.use(cors());
         app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-        app.get("https://haushaltsplan.herokuapp.com/getDocuments", async (req, res) => {
+        app.get("/getDocuments", async (req, res) => {
             const documents = await getDocuments();
             res.send(documents);
         });
@@ -50,6 +50,10 @@ MongoClient.connect(
                 .then(_ => "Document successfully inserted")
                 .catch(_ => "Error inserting document");
             res.send(response);
+        });
+
+        app.get('*', function(req, res) {
+            res.sendFile(path.join(__dirname + "../frontend/build/index.html"));
         });
 
         const server = app.listen(process.env.PORT || 8080, () => {
