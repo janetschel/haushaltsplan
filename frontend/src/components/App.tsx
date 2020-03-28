@@ -4,8 +4,7 @@ import Api from "../api/Api";
 function App() {
 
   const test = async () => {
-    const response =
-        await Api.addDocument("monday", "Kochen", "Jan", "Jan", false);
+    const response = await Api.getDocuments();
     console.log(response);
   };
 
