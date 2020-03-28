@@ -1,9 +1,7 @@
 {
   "root": "frontend/build/",
   "clean_urls": false,
-  "proxies": {
-    "/api/*": {
-      "origin": "https://haushaltsplan.herokuapp.com//"
-    }
+  "routes": {
+    "/*": "index.html"
   }
 }
