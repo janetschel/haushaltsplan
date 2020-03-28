@@ -38,6 +38,7 @@ MongoClient.connect(
         const app = express();
         app.use(bodyParser.json());
         app.use(cors());
+        app.use(express.static(path.join(__dirname, "../frontend/build")));
 
         app.get("/api/getDocuments", async (req, res) => {
             const documents = await getDocuments();
@@ -51,7 +52,6 @@ MongoClient.connect(
             res.send(response);
         });
 
-        app.use(express.static(path.join(__dirname, "../frontend/build")));
         app.get('*', function(req, res) {
             res.sendFile(path.join(__dirname + "../frontend/build", "index.html"));
         });
