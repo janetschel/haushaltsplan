@@ -40,12 +40,12 @@ MongoClient.connect(
         app.use(cors());
         app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-        app.get("/getDocuments", async (req, res) => {
+        app.get("/api/getDocuments", async (req, res) => {
             const documents = await getDocuments();
             res.send(documents);
         });
 
-        app.post("/addDocument", async (req, res) => {
+        app.post("/api/addDocument", async (req, res) => {
             const response = await addDoucment(req.body)
                 .then(_ => "Document successfully inserted")
                 .catch(_ => "Error inserting document");

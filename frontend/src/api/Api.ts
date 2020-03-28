@@ -1,5 +1,5 @@
 const getDocuments = async () =>
-    (await fetch('/getDocuments')).text();
+    (await fetch('/api/getDocuments')).text();
 
 const addDocument = async (day: string, chore: string, personInCharge: string, blame: string, done: boolean) => {
   const documentToInsert = {
@@ -10,7 +10,7 @@ const addDocument = async (day: string, chore: string, personInCharge: string, b
     done: done
   };
 
-  const response = await fetch('/addDocument', {
+  const response = await fetch('/api/addDocument', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
