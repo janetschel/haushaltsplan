@@ -40,7 +40,7 @@ MongoClient.connect(
         app.use(cors());
         app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-        app.get("/getDocuments", async (req, res) => {
+        app.get("https://haushaltsplan.herokuapp.com/getDocuments", async (req, res) => {
             const documents = await getDocuments();
             res.send(documents);
         });
