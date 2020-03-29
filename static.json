@@ -1,4 +1,7 @@
 {
+  "routes": {
+    "/**": "index.html"
+  },
   "proxies": {
     "/api/": {
       "origin": "https://haushaltspan-backend.herokuapp.com/"
