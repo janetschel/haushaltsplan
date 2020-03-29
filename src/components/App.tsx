@@ -5,7 +5,12 @@ function App() {
 
   const test = async () => {
     const response = await Api.healthCheck();
-    console.log(response)
+    console.log(response);
+    console.log(response.text());
+
+    const res = await Api.healthCheck().then(result => result);
+    console.log(res);
+    console.log(res.text());
   };
 
   test();
