@@ -10,7 +10,7 @@ const request = async (path: string, method: string) => {
     headers: {
       "Access-Control-Allow-Origin": "*"
     }
-  }).then(result => result).catch(error => error);
+  });
 };
 
 const healthCheck = async () => await request('/healthcheck', 'GET');
