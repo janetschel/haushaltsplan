@@ -10,7 +10,7 @@ function App() {
         'Access-Control-Allow-Origin': '*'
       }
     });
-    console.log(response);
+    console.log(response.text());
   };
 
   test();
