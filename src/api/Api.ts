@@ -1,8 +1,7 @@
-require('dotenv').config();
+import Config from "../config";
 
 const request = async (path: string, method: string) => {
-  const backendUrl = process.env.BACKEND_URL;
-  console.log(process.env.NODE_ENV);
+  const backendUrl = Config.getBackendUrl();
   const fetchUrl = `${backendUrl}${path}`;
 
   return await fetch(fetchUrl, {
