@@ -1,6 +1,11 @@
 {
   "root": "frontend/build/",
   "clean_urls": false,
+  "proxies": {
+    "/api/*": {
+      "origin": "https://janetschel.herokuapp.com//"
+    }
+  },
   "routes": {
     "/**": "index.html"
   }
