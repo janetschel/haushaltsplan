@@ -13,10 +13,7 @@ const request = async (path: string, method: string) => {
   }).then(result => result).catch(error => error);
 };
 
-const healthCheck = async () => {
-  const response = await request('/healthcheck', 'GET');
-  return response.text();
-};
+const healthCheck = async () => await request('/healthcheck', 'GET');
 
 const Api = {
   healthCheck,
