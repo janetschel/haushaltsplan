@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const request = async (path: string, method: string) => {
   const backendUrl = process.env.BACKEND_URL;
+  console.log(backendUrl);
   const fetchUrl = `${backendUrl}${path}`;
 
   return await fetch(fetchUrl, {
