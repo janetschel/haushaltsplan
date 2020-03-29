@@ -2,7 +2,7 @@
   "root": "frontend/build/",
   "clean_urls": false,
   "proxies": {
-    "/api/*": {
+    "/api/": {
       "origin": "http://www.janetschel.de/"
     }
   },
