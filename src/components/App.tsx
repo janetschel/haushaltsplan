@@ -1,16 +1,11 @@
 import React from 'react';
+import Api from "../api/Api";
 
 function App() {
 
   const test = async () => {
-    const response = await fetch('https://haushaltsplan-backend.herokuapp.com/healthcheck', {
-      method: 'GET',
-      mode: "no-cors",
-      headers: {
-        'Access-Control-Allow-Origin': '*'
-      }
-    });
-    console.log(response.text());
+    const response = await Api.healthCheck();
+    console.log(response)
   };
 
   test();

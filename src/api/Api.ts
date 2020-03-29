@@ -1,29 +1,25 @@
-const getDocuments = async () =>
-    (await fetch('/api/getDocuments')).text();
+require('dotenv').config();
 
-const addDocument = async (day: string, chore: string, personInCharge: string, blame: string, done: boolean) => {
-  const documentToInsert = {
-    day: day,
-    chore: chore,
-    personInCharge: personInCharge,
-    blame: blame,
-    done: done
-  };
+const request = async (path: string, method: string) => {
+  const backendUrl = process.env.BACKEND_URL;
+  const fetchUrl = `${backendUrl}${path}`;
 
-  const response = await fetch('/api/addDocument', {
-    method: 'POST',
+  return await fetch(fetchUrl, {
+    method: method,
+    mode: "no-cors",
     headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(documentToInsert),
-  });
+      "Access-Control-Allow-Origin": "*"
+    }
+  }).then(result => result).catch(error => error);
+};
 
-  return response.json();
+const healthCheck = async () => {
+  const response = await request('/healthcheck', 'GET');
+  return response.text();
 };
 
 const Api = {
-  getDocuments,
-  addDocument,
+  healthCheck,
 };
 
 export default Api;
