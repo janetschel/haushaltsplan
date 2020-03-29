@@ -3,7 +3,7 @@ require('dotenv').config();
 const request = async (path: string, method: string) => {
   const backendUrl = process.env.BACKEND_URL;
   console.log(backendUrl);
-  console.log(process.env.MONGODB_USER);
+  console.log(process.env.test);
   const fetchUrl = `${backendUrl}${path}`;
 
   return await fetch(fetchUrl, {
