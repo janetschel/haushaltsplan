@@ -2,22 +2,16 @@ import React from 'react';
 import Api from "../api/Api";
 
 function App() {
-
-  const test = async () => {
-    const response = await Api.healthCheck();
+  const performHealthCheck = async () =>  {
+    const response = await (await Api.healthCheck()).text();
     console.log(response);
-    console.log(response.text());
-
-    const res = await Api.healthCheck().then(result => result);
-    console.log(res);
-    console.log(res.text());
   };
 
-  test();
+  performHealthCheck();
 
   return (
     <div className="App">
-      <p>Testing</p>
+      <p>Check console for healthcheck</p>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 const getBackendUrl = () =>
-    process.env.NODE_ENV === 'production' ? 'https://haushaltsplan-backend.herokuapp.com' : 'localhost:8080';
+    process.env.NODE_ENV === 'production' ? 'https://haushaltsplan-backend.herokuapp.com' : '';
 
 const Config = {
   getBackendUrl,
