@@ -3,7 +3,7 @@ import Api from "../api/Api";
 
 function App() {
   const performHealthCheck = async () =>  {
-    const response = await Api.healthCheck();
+    const response = await (await Api.healthCheck()).text();
     console.log(response);
   };
 
