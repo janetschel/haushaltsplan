@@ -1,6 +1,6 @@
 const getBackendUrl = () =>
     process.env.NODE_ENV === 'production' ?
-        'https://crossorigin.me/https://haushaltsplan-backend.herokuapp.com' : '';
+        'https://cors-anywhere.herokuapp.com/https://haushaltsplan-backend.herokuapp.com' : '';
 
 const Config = {
   getBackendUrl,
