@@ -5,4 +5,26 @@
 
 div.App {
   margin: 10px;
+
+  div.Overview {
+    div.Task {
+      display: inline-block;
+      width: 250px;
+      border: 1px black solid;
+      border-radius: 5px;
+      margin: 5px;
+
+      p {
+        margin: 5px;
+      }
+
+      span {
+        margin: 5px;
+      }
+    }
+
+    h4.heading {
+      margin-bottom: 20px;
+    }
+  }
 }
