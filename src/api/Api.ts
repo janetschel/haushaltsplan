@@ -7,7 +7,7 @@ const request = async (path: string, method: string) => {
   return await fetch(fetchUrl, {
     method: method,
     headers: {
-      'Origin': 'https://haushaltsplan-backend.herokuapp.com/'
+      'X-Requested-With': 'https://haushaltsplan-backend.herokuapp.com/'
     }
   });
 };
