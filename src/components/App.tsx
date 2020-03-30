@@ -3,8 +3,9 @@ import Api from "../api/Api";
 
 function App() {
   const performHealthCheck = async () =>  {
-    const response = await (await Api.healthCheck()).text();
-    console.log(response);
+    const response = await Api.getDocuments();
+    const json = await response.json();
+    console.log(json);
   };
 
   performHealthCheck();
