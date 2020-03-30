@@ -8,7 +8,8 @@ const request = async (path: string, method: string) => {
     method: method,
     headers: {
       'Origin': 'https://haushaltsplan-backend.herokuapp.com/',
-      'X-Requested-With': 'https://haushaltsplan-backend.herokuapp.com/'
+      'X-Requested-With': 'https://haushaltsplan-backend.herokuapp.com/',
+      'Access-Control-Allow-Origin': '*'
     }
   });
 };
