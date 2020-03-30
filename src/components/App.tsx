@@ -5,8 +5,6 @@ function App() {
   const performHealthCheck = async () =>  {
     const response = await Api.healthCheck();
     console.log(response);
-    console.log(await response.text());
-    console.log(Api.healthCheck());
   };
 
   performHealthCheck();
