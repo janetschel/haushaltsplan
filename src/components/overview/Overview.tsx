@@ -1,7 +1,9 @@
 import React from 'react';
-import Api from "../../api/Api";
+import { Typography } from '@material-ui/core'
+import Api from '../../api/Api';
+import Task from './Task';
 
-class Overview extends React.Component<{}, {}> {
+class Overview extends React.Component<{}, { tasks: [] }> {
   constructor({props}: { props: any }) {
     super(props);
 
@@ -16,14 +18,17 @@ class Overview extends React.Component<{}, {}> {
 
   getTasks = async () => {
     const tasks = await (await Api.getDocuments()).json();
+    await this.setState({ tasks: tasks });
     console.log(tasks);
-    this.setState({ tasks: tasks });
   };
 
   render() {
+    const { tasks } = this.state;
+
     return(
-        <div className="overview">
-          Overview
+        <div className="Overview">
+          <Typography variant="h4" className="heading">Haushaltsplaner</Typography>
+          { tasks.map((currentTask, index) => <Task key={index} currentTask={currentTask} />) }
         </div>
     );
   }
