@@ -6,7 +6,6 @@ const request = async (path: string, method: string) => {
 
   return await fetch(fetchUrl, {
     method: method,
-    mode: "no-cors",
     headers: {
       "Access-Control-Allow-Origin": "*"
     }
