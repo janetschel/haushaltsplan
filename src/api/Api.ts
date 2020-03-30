@@ -7,7 +7,7 @@ const request = async (path: string, method: string) => {
   return await fetch(fetchUrl, {
     method: method,
     headers: {
-      "Access-Control-Allow-Origin": "*"
+      'Origin': process.env.NODE_ENV === 'production' ? 'https://haushaltsplan-backend.herokuapp.com/' : 'null'
     }
   });
 };
