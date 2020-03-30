@@ -3,27 +3,20 @@ import Api from "../api/Api";
 import './App.css'
 import {Typography} from "@material-ui/core";
 
-class App extends React.Component<{}, { message: string }> {
-  constructor({props}: { props: any }) {
-    super(props);
-
-    this.state = {
-      message: '',
-    }
+class App extends React.Component<{}, {}> {
+  componentDidMount(): void {
+    this.performHealthCheck();
   }
 
   performHealthCheck = async () => {
     const response = await (await Api.healthCheck()).text();
-    this.setState({ message: response });
+    console.log(response);
   };
 
   render() {
-    const { message } = this.state;
-    this.performHealthCheck();
-
     return(
       <div className="App">
-        <Typography>Health check: {message}</Typography>
+        <Typography>Check console for health check</Typography>
         <Typography>Site under developement.. Please stay tuned</Typography>
       </div>
     );
