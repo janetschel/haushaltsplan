@@ -22,6 +22,7 @@ class Task extends React.Component<Props, {}> {
 
 type Props = {
   currentTask: { id: string, day:string, chore: string, pic: string, blame: string, done: boolean },
+  authtoken: string,
 }
 
 export default Task;

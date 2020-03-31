@@ -6,6 +6,18 @@
 div.App {
   margin: 10px;
 
+  div.LoginPrompt {
+    margin: 10px;
+
+    div.username, div.password {
+      margin: 20px 10px 0 0;
+    }
+
+    button.loginButton {
+      margin-top: 20px;
+    }
+  }
+
   div.Overview {
     div.Task {
       display: inline-block;
