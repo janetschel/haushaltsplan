@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dialog, DialogTitle, DialogContent, Typography } from '@material-ui/core';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
-import Api from "../../api/Api";
+import EditDialogDetails from "./EditDialogDetails";
 
 class EditDialog extends React.Component<Props, {}> {
   handleClose = () => {
@@ -11,16 +11,13 @@ class EditDialog extends React.Component<Props, {}> {
   };
 
   deleteTask = async () => {
-    const { currentTask, authtoken } = this.props;
-
-    await Api.deleteDocument(currentTask.id, authtoken)
-        .catch(error => console.error(error));
-
+    const { deleteTask } = this.props;
+    await deleteTask();
     this.handleClose();
   };
 
   render() {
-    const { isVisible, currentTask } = this.props;
+    const { isVisible, currentTask, closeDialog, updateTaskComplete } = this.props;
 
     return(
         <Dialog open={isVisible} onClose={this.handleClose} className="EditDialog">
@@ -31,7 +28,14 @@ class EditDialog extends React.Component<Props, {}> {
                 <DeleteOutlineOutlinedIcon color="secondary" className="deleteIcon" />
                 <Typography className="deleteText">Aufgabe endgültig löschen</Typography>
               </div>
-
+              <hr className="hr"/>
+              <div className="dialogWrapper">
+                <EditDialogDetails
+                    currentTask={currentTask}
+                    handleClose={closeDialog}
+                    saveChanges={updateTaskComplete}
+                />
+              </div>
             </div>
           </DialogContent>
         </Dialog>
@@ -44,7 +48,8 @@ type Props = {
   isVisible: boolean,
   closeDialog: () => void,
   updateTask: () => void,
-  authtoken: string,
+  deleteTask: () => void,
+  updateTaskComplete: (day: string, pic: string) => void,
 }
 
 export default EditDialog;

@@ -57,8 +57,20 @@ div.App div.Overview div.Task p {
 div.App div.Overview div.Task span {
   margin: 5px;
 }
-div.App div.Overview h4.heading {
+div.App div.Overview div.headingWrapper {
+  display: grid;
+  grid-template-areas: "heading loggedInUser";
+  grid-template-columns: 1fr 200px;
+  margin-left: 10px;
+}
+div.App div.Overview div.headingWrapper h4.heading {
   margin-bottom: 20px;
+  grid-area: heading;
+}
+div.App div.Overview div.headingWrapper span.loggedInUser {
+  grid-area: loggedInUser;
+  color: gray;
+  margin-top: 10px;
 }
 
 div.dialogContent {
@@ -84,6 +96,75 @@ div.dialogContent div.contentWrapper div.deleteTask p.deleteText {
 div.dialogContent div.contentWrapper div.deleteTask:hover {
   cursor: pointer;
   background-color: rgba(213, 80, 82, 0.1);
+}
+div.dialogContent hr.hr {
+  margin-top: 20px;
+  width: 100%;
+}
+div.dialogContent div.dialogWrapper {
+  width: 100%;
+  margin-top: 20px;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails {
+  display: grid;
+  grid-template-areas: "chore choreContent choreContent" "day dayContent dayContent" "pic picContent picContent" "blame blameContent blameContent" "done doneContent helpDone" "abortButton . saveButton";
+  grid-template-columns: 200px 50px 1fr;
+  align-items: center;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails div.dropDownDayWrapper {
+  width: 200px;
+  margin-bottom: 10px;
+  grid-area: dayContent;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails div.dropDownPicWrapper {
+  width: 200px;
+  margin-bottom: 10px;
+  grid-area: picContent;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails button.abortButton, div.dialogContent div.dialogWrapper div.dialogContentDetails button.saveButton {
+  margin: 20px 0 10px 0;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails button.abortButton {
+  grid-area: abortButton;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails button.saveButton {
+  grid-area: saveButton;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p.chore {
+  grid-area: chore;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p.choreContent {
+  grid-area: choreContent;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p.day {
+  grid-area: day;
+  margin: 0;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p.pic {
+  grid-area: pic;
+  margin: 0;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p.blame {
+  grid-area: blame;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p.blameContent {
+  grid-area: blameContent;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p.done {
+  grid-area: done;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p.doneContent {
+  grid-area: doneContent;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails svg.helpDone {
+  grid-area: helpDone;
+  color: gray;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails svg.helpDone:hover {
+  cursor: pointer;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p {
+  margin-bottom: 10px;
 }
 
 /*# sourceMappingURL=App.css.map */

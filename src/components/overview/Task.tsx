@@ -17,6 +17,8 @@ class Task extends React.Component<Props, { isVisible: boolean }> {
 
     this.handleClose = this.handleClose.bind(this);
     this.updateTasks = this.updateTasks.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
+    this.updateTaskComplete = this.updateTaskComplete.bind(this);
   }
 
   translateDayToGerman = (dayToTranslate: string) => Translator.translateDay(dayToTranslate);
@@ -29,6 +31,23 @@ class Task extends React.Component<Props, { isVisible: boolean }> {
         .catch(error => console.error(error));
 
     this.updateTasks();
+  };
+
+  deleteTask = async () => {
+    const { currentTask, authtoken } = this.props;
+
+    await Api.deleteDocument(currentTask.id, authtoken)
+        .catch(error => console.error(error));
+  };
+
+  updateTaskComplete = async (day: string, pic: string) => {
+    const { currentTask, authtoken, username } = this.props;
+
+    currentTask.day = day;
+    currentTask.pic = pic;
+    currentTask.blame = username.startsWith('jan') ? 'Jan' : 'Lea';
+
+    await Api.updateDocument(currentTask, authtoken);
   };
 
   updateTasks = async () => {
@@ -44,9 +63,9 @@ class Task extends React.Component<Props, { isVisible: boolean }> {
 
   render() {
     const { isVisible } = this.state;
-    const { currentTask, authtoken } = this.props;
+    const { currentTask } = this.props;
 
-    const taskDone = currentTask.done ? 'erledigt' : 'zu Erledigen';
+    const taskDone = currentTask.done ? 'Erledigt' : 'Zu erledigen';
     const colorToDisplay = currentTask.done ? 'rgba(120, 222, 142, 0.3)' : 'rgba(213, 80, 82, 0.2)';
 
     return (
@@ -58,14 +77,15 @@ class Task extends React.Component<Props, { isVisible: boolean }> {
           }
           <ListIcon className="editIcon" onClick={this.handleOpen}/>
           <Typography className="day" variant="body2">{this.translateDayToGerman(currentTask.day)}</Typography>
-          <Typography className="pic" variant="body2">{taskDone} durch: {currentTask.pic}</Typography>
-          <Typography className="blame" variant="caption">eingetragen von: {currentTask.blame}</Typography>
+          <Typography className="pic" variant="body2">{taskDone} von: {currentTask.pic}</Typography>
+          <Typography className="blame" variant="caption">Eingetragen von: {currentTask.blame}</Typography>
           <EditDialog
               isVisible={isVisible}
               closeDialog={this.handleClose}
               currentTask={currentTask}
               updateTask={this.updateTasks}
-              authtoken={authtoken}
+              deleteTask={this.deleteTask}
+              updateTaskComplete={this.updateTaskComplete}
           />
         </div>
     );
@@ -76,6 +96,7 @@ type Props = {
   currentTask: { id: string, day:string, chore: string, pic: string, blame: string, done: boolean },
   authtoken: string,
   getTasks: () => void,
+  username: string,
 }
 
 export default Task;

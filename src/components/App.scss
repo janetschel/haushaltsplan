@@ -78,8 +78,23 @@ div.App {
       }
     }
 
-    h4.heading {
-      margin-bottom: 20px;
+    div.headingWrapper {
+      display: grid;
+      grid-template-areas: "heading loggedInUser";
+      grid-template-columns: 1fr 200px;
+
+      margin-left: 10px;
+
+      h4.heading {
+        margin-bottom: 20px;
+        grid-area: heading;
+      }
+
+      span.loggedInUser {
+        grid-area: loggedInUser;
+        color: gray;
+        margin-top: 10px;
+      }
     }
   }
 }
@@ -112,6 +127,101 @@ div.dialogContent {
       &:hover {
         cursor: pointer;
         background-color: rgba(213, 80, 82, 0.1);
+      }
+    }
+  }
+
+  hr.hr {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  div.dialogWrapper {
+    width: 100%;
+    margin-top: 20px;
+
+    div.dialogContentDetails {
+      display: grid;
+      grid-template-areas:
+              "chore choreContent choreContent"
+              "day dayContent dayContent"
+              "pic picContent picContent"
+              "blame blameContent blameContent"
+              "done doneContent helpDone"
+              "abortButton . saveButton";
+
+      grid-template-columns: 200px 50px 1fr;
+      align-items: center;
+
+      div.dropDownDayWrapper {
+        width: 200px;
+        margin-bottom: 10px;
+        grid-area: dayContent;
+      }
+
+      div.dropDownPicWrapper {
+        width: 200px;
+        margin-bottom: 10px;
+        grid-area: picContent;
+      }
+
+      button.abortButton, button.saveButton {
+        margin: 20px 0 10px 0;
+      }
+
+      button.abortButton {
+        grid-area: abortButton;
+      }
+
+      button.saveButton {
+        grid-area: saveButton;
+      }
+
+      p.chore {
+        grid-area: chore;
+      }
+
+      p.choreContent {
+        grid-area: choreContent;
+      }
+
+      p.day {
+        grid-area: day;
+        margin: 0;
+      }
+
+      p.pic {
+        grid-area: pic;
+        margin: 0;
+      }
+
+      p.blame {
+        grid-area: blame;
+      }
+
+      p.blameContent {
+        grid-area: blameContent;
+      }
+
+      p.done {
+        grid-area: done;
+      }
+
+      p.doneContent {
+        grid-area: doneContent;
+      }
+
+      svg.helpDone {
+        grid-area: helpDone;
+        color: gray;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      p {
+        margin-bottom: 10px;
       }
     }
   }
