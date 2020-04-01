@@ -63,7 +63,7 @@ class Task extends React.Component<Props, { isVisible: boolean }> {
 
   render() {
     const { isVisible } = this.state;
-    const { currentTask } = this.props;
+    const { currentTask, createNewTaskFromOldTask, username } = this.props;
 
     const taskDone = currentTask.done ? 'Erledigt' : 'Zu erledigen';
     const colorToDisplay = currentTask.done ? 'rgba(120, 222, 142, 0.3)' : 'rgba(213, 80, 82, 0.2)';
@@ -86,6 +86,8 @@ class Task extends React.Component<Props, { isVisible: boolean }> {
               updateTask={this.updateTasks}
               deleteTask={this.deleteTask}
               updateTaskComplete={this.updateTaskComplete}
+              createNewTaskFromOldTask={createNewTaskFromOldTask}
+              username={username}
           />
         </div>
     );
@@ -94,6 +96,7 @@ class Task extends React.Component<Props, { isVisible: boolean }> {
 
 type Props = {
   currentTask: { id: string, day:string, chore: string, pic: string, blame: string, done: boolean },
+  createNewTaskFromOldTask: (oldId: string, day: string, chore: string, pic: string, blame: string) => void,
   authtoken: string,
   getTasks: () => void,
   username: string,

@@ -2,6 +2,7 @@ import React from 'react';
 import { Typography } from '@material-ui/core'
 import Api from '../../api/Api';
 import Task from './Task';
+import DayUtil from "../utils/DayUtil";
 
 class Overview extends React.Component<Props, { tasks: [], error: boolean, authtoken: string, username: string }> {
   constructor({props}: { props: any }) {
@@ -15,6 +16,7 @@ class Overview extends React.Component<Props, { tasks: [], error: boolean, autht
     };
 
     this.getTasks = this.getTasks.bind(this);
+    this.createNewTaskFromOldTask = this.createNewTaskFromOldTask.bind(this);
   }
 
   componentDidMount(): void {
@@ -49,6 +51,22 @@ class Overview extends React.Component<Props, { tasks: [], error: boolean, autht
     }
   };
 
+  createNewTaskFromOldTask = async (oldId: string, day: string, chore: string, pic: string, blame: string) => {
+    const { authtoken } = this.state;
+    const dayForNewDocument = DayUtil.getDayTwoDaysFromDay(day);
+
+    const newDocument = {
+      day: dayForNewDocument,
+      chore: chore,
+      pic: pic,
+      blame: blame,
+      done: false
+    };
+
+    await Api.addDocument(newDocument, authtoken);
+    await Api.deleteDocument(oldId, authtoken);
+  };
+
   render() {
     const { tasks, error, authtoken, username } = this.state;
 
@@ -65,6 +83,7 @@ class Overview extends React.Component<Props, { tasks: [], error: boolean, autht
                   currentTask={currentTask}
                   getTasks={this.getTasks}
                   username={username}
+                  createNewTaskFromOldTask={this.createNewTaskFromOldTask}
               />
           )}
           { error && <Typography color="secondary">Ungültiger oder fehlender Authentifizierungs-Token.</Typography>}

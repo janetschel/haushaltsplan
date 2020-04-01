@@ -1,7 +1,8 @@
 import React from 'react';
-import { Dialog, DialogTitle, DialogContent, Typography } from '@material-ui/core';
+import {Dialog, DialogTitle, DialogContent, Typography, Tooltip} from '@material-ui/core';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import EditDialogDetails from "./EditDialogDetails";
+import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 
 class EditDialog extends React.Component<Props, {}> {
   handleClose = () => {
@@ -16,6 +17,16 @@ class EditDialog extends React.Component<Props, {}> {
     this.handleClose();
   };
 
+  moveTask = async () => {
+    const { currentTask, username, createNewTaskFromOldTask } = this.props;
+
+    const { day, chore, pic} = currentTask;
+    const blame = username.startsWith('jan') ? 'Jan' : 'Lea';
+
+    await createNewTaskFromOldTask(currentTask.id, day, chore, pic, blame);
+    this.handleClose();
+  };
+
   render() {
     const { isVisible, currentTask, closeDialog, updateTaskComplete } = this.props;
 
@@ -24,10 +35,16 @@ class EditDialog extends React.Component<Props, {}> {
           <DialogTitle className="dialogTitle">Bearbeiten der Aufgabe "{currentTask.chore}"</DialogTitle>
           <DialogContent className="dialogContent">
             <div className="contentWrapper">
-              <div className="deleteTask" onClick={this.deleteTask}>
-                <DeleteOutlineOutlinedIcon color="secondary" className="deleteIcon" />
-                <Typography className="deleteText">Aufgabe endgültig löschen</Typography>
+                <div className="deleteTask" onClick={this.deleteTask}>
+                  <DeleteOutlineOutlinedIcon color="secondary" className="deleteIcon" />
+                  <Typography className="deleteText">Aufgabe endgültig löschen</Typography>
+                </div>
+            <Tooltip title="Achtung: dabei wird dieser Auftrag gelöscht">
+              <div className="moveTask" onClick={this.moveTask}>
+                <ArrowForwardIosOutlinedIcon className="moveIcon" />
+                <Typography className="moveText">Aufgabe in zwei Tagen erneut einstellen</Typography>
               </div>
+            </Tooltip>
               <hr className="hr"/>
               <div className="dialogWrapper">
                 <EditDialogDetails
@@ -45,11 +62,13 @@ class EditDialog extends React.Component<Props, {}> {
 
 type Props = {
   currentTask: { id: string, day:string, chore: string, pic: string, blame: string, done: boolean },
-  isVisible: boolean,
+  createNewTaskFromOldTask: (oldId: string, day: string, chore: string, pic: string, blame: string) => void,
+  updateTaskComplete: (day: string, pic: string) => void,
   closeDialog: () => void,
   updateTask: () => void,
   deleteTask: () => void,
-  updateTaskComplete: (day: string, pic: string) => void,
+  isVisible: boolean,
+  username: string,
 }
 
 export default EditDialog;

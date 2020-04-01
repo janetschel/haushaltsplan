@@ -84,7 +84,7 @@ div.dialogContent div.contentWrapper div.deleteTask {
   padding: 10px;
   border: 1px lightgray solid;
   border-radius: 5px;
-  transition: background-color 0.25s ease-in;
+  transition: background-color 0.25s ease-in, border 0.1s ease-in;
 }
 div.dialogContent div.contentWrapper div.deleteTask svg.deleteIcon {
   grid-area: deleteIcon;
@@ -96,6 +96,29 @@ div.dialogContent div.contentWrapper div.deleteTask p.deleteText {
 div.dialogContent div.contentWrapper div.deleteTask:hover {
   cursor: pointer;
   background-color: rgba(213, 80, 82, 0.1);
+  border: 1px red solid;
+}
+div.dialogContent div.contentWrapper div.moveTask {
+  display: grid;
+  grid-template-areas: "moveIcon moveText";
+  grid-template-columns: 40px 1fr;
+  justify-items: left;
+  padding: 10px;
+  border: 1px lightgray solid;
+  border-radius: 5px;
+  margin-top: 10px;
+  transition: background-color 0.25s ease-in;
+}
+div.dialogContent div.contentWrapper div.moveTask svg.moveIcon {
+  grid-area: moveIcon;
+  margin-left: 5px;
+}
+div.dialogContent div.contentWrapper div.moveTask p.moveText {
+  grid-area: moveText;
+}
+div.dialogContent div.contentWrapper div.moveTask:hover {
+  cursor: pointer;
+  background-color: rgba(211, 211, 211, 0.3);
 }
 div.dialogContent hr.hr {
   margin-top: 20px;

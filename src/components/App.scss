@@ -113,7 +113,7 @@ div.dialogContent {
       border: 1px lightgray solid;
       border-radius: 5px;
 
-      transition: background-color 0.25s ease-in;
+      transition: background-color 0.25s ease-in, border 0.1s ease-in;
 
       svg.deleteIcon {
         grid-area: deleteIcon;
@@ -127,6 +127,35 @@ div.dialogContent {
       &:hover {
         cursor: pointer;
         background-color: rgba(213, 80, 82, 0.1);
+        border: 1px red solid;
+      }
+    }
+
+    div.moveTask {
+      display: grid;
+      grid-template-areas: "moveIcon moveText";
+      grid-template-columns: 40px 1fr;
+      justify-items: left;
+
+      padding: 10px;
+      border: 1px lightgray solid;
+      border-radius: 5px;
+      margin-top: 10px;
+
+      transition: background-color 0.25s ease-in;
+
+      svg.moveIcon {
+        grid-area: moveIcon;
+        margin-left: 5px;
+      }
+
+      p.moveText {
+        grid-area: moveText;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: rgba(211, 211, 211, 0.3);
       }
     }
   }
