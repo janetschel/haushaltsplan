@@ -11,8 +11,12 @@ const translateDay = (dayToTranslate: string) => {
   }
 };
 
+const translateBoolean = (booleanToTranslate: boolean) =>
+    booleanToTranslate ? 'ja' : 'nein';
+
 const Translator = {
   translateDay,
+  translateBoolean,
 };
 
 export default Translator;
