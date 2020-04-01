@@ -61,4 +61,29 @@ div.App div.Overview h4.heading {
   margin-bottom: 20px;
 }
 
+div.dialogContent {
+  width: 500px;
+}
+div.dialogContent div.contentWrapper div.deleteTask {
+  display: grid;
+  grid-template-areas: "deleteIcon deleteText";
+  grid-template-columns: 40px 1fr;
+  justify-items: left;
+  padding: 10px;
+  border: 1px lightgray solid;
+  border-radius: 5px;
+  transition: background-color 0.25s ease-in;
+}
+div.dialogContent div.contentWrapper div.deleteTask svg.deleteIcon {
+  grid-area: deleteIcon;
+  margin-left: 5px;
+}
+div.dialogContent div.contentWrapper div.deleteTask p.deleteText {
+  grid-area: deleteText;
+}
+div.dialogContent div.contentWrapper div.deleteTask:hover {
+  cursor: pointer;
+  background-color: rgba(213, 80, 82, 0.1);
+}
+
 /*# sourceMappingURL=App.css.map */

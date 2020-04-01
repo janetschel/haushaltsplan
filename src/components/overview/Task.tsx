@@ -5,8 +5,20 @@ import ListIcon from '@material-ui/icons/List';
 import ToggleOffOutlinedIcon from '@material-ui/icons/ToggleOffOutlined';
 import ToggleOnIcon from '@material-ui/icons/ToggleOn';
 import Api from "../../api/Api";
+import EditDialog from "../edit/EditDialog";
 
-class Task extends React.Component<Props, {}> {
+class Task extends React.Component<Props, { isVisible: boolean }> {
+  constructor({props}: { props: any }) {
+    super(props);
+
+    this.state = {
+      isVisible: false,
+    };
+
+    this.handleClose = this.handleClose.bind(this);
+    this.updateTasks = this.updateTasks.bind(this);
+  }
+
   translateDayToGerman = (dayToTranslate: string) => Translator.translateDay(dayToTranslate);
 
   toggleDoneOfTask = async () => {
@@ -24,8 +36,16 @@ class Task extends React.Component<Props, {}> {
     await getTasks();
   };
 
+  handleOpen = async () =>
+    await this.setState({ isVisible: true });
+
+  handleClose = async () =>
+    await this.setState({ isVisible: false });
+
   render() {
-    const { currentTask } = this.props;
+    const { isVisible } = this.state;
+    const { currentTask, authtoken } = this.props;
+
     const taskDone = currentTask.done ? 'erledigt' : 'zu Erledigen';
     const colorToDisplay = currentTask.done ? 'rgba(120, 222, 142, 0.3)' : 'rgba(213, 80, 82, 0.2)';
 
@@ -36,10 +56,17 @@ class Task extends React.Component<Props, {}> {
               <ToggleOnIcon className="toggle" onClick={this.toggleDoneOfTask} /> :
               <ToggleOffOutlinedIcon className="toggle" onClick={this.toggleDoneOfTask} />
           }
-          <ListIcon className="editIcon"/>
+          <ListIcon className="editIcon" onClick={this.handleOpen}/>
           <Typography className="day" variant="body2">{this.translateDayToGerman(currentTask.day)}</Typography>
           <Typography className="pic" variant="body2">{taskDone} durch: {currentTask.pic}</Typography>
           <Typography className="blame" variant="caption">eingetragen von: {currentTask.blame}</Typography>
+          <EditDialog
+              isVisible={isVisible}
+              closeDialog={this.handleClose}
+              currentTask={currentTask}
+              updateTask={this.updateTasks}
+              authtoken={authtoken}
+          />
         </div>
     );
   }
