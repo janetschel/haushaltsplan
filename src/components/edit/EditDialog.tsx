@@ -37,7 +37,7 @@ class EditDialog extends React.Component<Props, {}> {
             <div className="contentWrapper">
                 <div className="deleteTask" onClick={this.deleteTask}>
                   <DeleteOutlineOutlinedIcon color="secondary" className="deleteIcon" />
-                  <Typography className="deleteText">Aufgabe endgültig löschen</Typography>
+                  <Typography className="deleteText">Aufgabe löschen</Typography>
                 </div>
             <Tooltip title="Achtung: dabei wird dieser Auftrag gelöscht">
               <div className="moveTask" onClick={this.moveTask}>
