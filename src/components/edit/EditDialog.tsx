@@ -35,16 +35,14 @@ class EditDialog extends React.Component<Props, {}> {
           <DialogTitle className="dialogTitle">Bearbeiten der Aufgabe "{currentTask.chore}"</DialogTitle>
           <DialogContent className="dialogContent">
             <div className="contentWrapper">
-                <div className="deleteTask" onClick={this.deleteTask}>
-                  <DeleteOutlineOutlinedIcon color="secondary" className="deleteIcon" />
-                  <Typography className="deleteText">Aufgabe löschen</Typography>
-                </div>
-            <Tooltip title="Achtung: dabei wird dieser Auftrag gelöscht">
+              <div className="deleteTask" onClick={this.deleteTask}>
+                <DeleteOutlineOutlinedIcon color="secondary" className="deleteIcon" />
+                <Typography className="deleteText">Aufgabe löschen</Typography>
+              </div>
               <div className="moveTask" onClick={this.moveTask}>
                 <ArrowForwardIosOutlinedIcon className="moveIcon" />
                 <Typography className="moveText">Aufgabe in zwei Tagen erneut einstellen</Typography>
               </div>
-            </Tooltip>
               <hr className="hr"/>
               <div className="dialogWrapper">
                 <EditDialogDetails
