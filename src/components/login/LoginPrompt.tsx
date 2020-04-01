@@ -4,15 +4,10 @@ import {Button, TextField, Typography} from '@material-ui/core';
 class LoginPrompt extends React.Component<Props, {}> {
 
   userRequestingLogIn = () => {
+    const { userLoggingIn } = this.props;
+
     const username = (document.getElementById('username') as HTMLInputElement).value;
     const password = (document.getElementById('password') as HTMLInputElement).value;
-
-    if (username.length === 0 || password.length === 0) {
-
-      return;
-    }
-
-    const { userLoggingIn } = this.props;
 
     userLoggingIn(username, password);
   };
