@@ -5,7 +5,7 @@ import LoginPrompt from './login/LoginPrompt';
 import './App.css';
 import Api from "../api/Api";
 
-class App extends React.Component<{}, { tasks: [], userIsLoggedIn: boolean, authtoken: string }> {
+class App extends React.Component<{}, { tasks: [], userIsLoggedIn: boolean, authtoken: string, username: string }> {
   constructor({props}: { props: any }) {
     super(props);
 
@@ -13,6 +13,7 @@ class App extends React.Component<{}, { tasks: [], userIsLoggedIn: boolean, auth
       tasks: [],
       userIsLoggedIn: false,
       authtoken: '',
+      username: '',
     };
 
     this.userLoggingIn = this.userLoggingIn.bind(this);
@@ -28,16 +29,20 @@ class App extends React.Component<{}, { tasks: [], userIsLoggedIn: boolean, auth
     }
 
     const authtoken = await(await Api.getAuthToken(base64String)).text();
+    await this.setState({ username: username });
     await this.setState({ authtoken: authtoken });
     await this.setState({ userIsLoggedIn: true });
   };
 
   render() {
-    const { userIsLoggedIn, authtoken } = this.state;
+    const { userIsLoggedIn, authtoken, username } = this.state;
 
     return(
       <div className="App">
-        { userIsLoggedIn ? <Overview authtoken={authtoken}/> : <LoginPrompt userLoggingIn={this.userLoggingIn} /> }
+        { userIsLoggedIn ?
+            <Overview authtoken={authtoken} username={username}/> :
+            <LoginPrompt userLoggingIn={this.userLoggingIn} />
+        }
       </div>
     );
   }

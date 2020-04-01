@@ -32,7 +32,7 @@ class LoginPrompt extends React.Component<Props, {}> {
               onKeyDown={this.keyPressed}
           />
           <br />
-          <Button className="loginButton" variant="outlined" onClick={this.userRequestingLogIn}>Einloggen!</Button>
+          <Button className="loginButton" variant="outlined" onClick={this.userRequestingLogIn}>Einloggen</Button>
         </div>
     );
   }

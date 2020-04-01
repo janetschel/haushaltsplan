@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core'
 import Api from '../../api/Api';
 import Task from './Task';
 
-class Overview extends React.Component<Props, { tasks: [], error: boolean, authtoken: string}> {
+class Overview extends React.Component<Props, { tasks: [], error: boolean, authtoken: string, username: string }> {
   constructor({props}: { props: any }) {
     super(props);
 
@@ -11,14 +11,21 @@ class Overview extends React.Component<Props, { tasks: [], error: boolean, autht
       tasks: [],
       error: false,
       authtoken: '',
+      username: '',
     };
 
     this.getTasks = this.getTasks.bind(this);
   }
 
   componentDidMount(): void {
+    this.setUsername();
     this.performInitialFetch();
   }
+
+  setUsername = async () => {
+    const { username } = this.props;
+    await this.setState({ username: username });
+  };
 
   performInitialFetch = async () => {
     await this.setAuthToken();
@@ -43,13 +50,22 @@ class Overview extends React.Component<Props, { tasks: [], error: boolean, autht
   };
 
   render() {
-    const { tasks, error, authtoken } = this.state;
+    const { tasks, error, authtoken, username } = this.state;
 
     return(
         <div className="Overview">
-          <Typography variant="h4" className="heading">Haushaltsplaner</Typography>
+          <div className="headingWrapper" >
+            <Typography variant="h4" className="heading">Haushaltsplaner</Typography>
+            <Typography variant="caption" className="loggedInUser">Eingeloggt als {username}</Typography>
+          </div>
           { !error && tasks.map((currentTask, index) =>
-              <Task authtoken={authtoken} key={index} currentTask={currentTask} getTasks={this.getTasks}/>
+              <Task
+                  authtoken={authtoken}
+                  key={index}
+                  currentTask={currentTask}
+                  getTasks={this.getTasks}
+                  username={username}
+              />
           )}
           { error && <Typography color="secondary">Ungültiger oder fehlender Authentifizierungs-Token.</Typography>}
         </div>
@@ -59,6 +75,7 @@ class Overview extends React.Component<Props, { tasks: [], error: boolean, autht
 
 type Props = {
   authtoken: string,
+  username: string,
 }
 
 export default Overview;
