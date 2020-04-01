@@ -16,11 +16,40 @@ div.App div.LoginPrompt button.loginButton {
   margin-top: 20px;
 }
 div.App div.Overview div.Task {
-  display: inline-block;
-  width: 250px;
+  display: grid;
+  grid-template-areas: "chore toggleIcon editIcon" "day day day" "pic pic pic" "blame blame blame";
+  grid-template-columns: 250px 35px 35px;
+  transition: background-color 0.25s ease-in-out;
+  width: 325px;
   border: 1px black solid;
   border-radius: 5px;
   margin: 5px;
+}
+div.App div.Overview div.Task svg.toggle {
+  grid-area: toggleIcon;
+  margin: 5px;
+}
+div.App div.Overview div.Task svg.toggle:hover {
+  cursor: pointer;
+}
+div.App div.Overview div.Task svg.editIcon {
+  grid-area: editIcon;
+  margin: 5px;
+}
+div.App div.Overview div.Task svg.editIcon:hover {
+  cursor: pointer;
+}
+div.App div.Overview div.Task p.chore {
+  grid-area: chore;
+}
+div.App div.Overview div.Task p.day {
+  grid-area: day;
+}
+div.App div.Overview div.Task p.pic {
+  grid-area: pic;
+}
+div.App div.Overview div.Task span.blame {
+  grid-area: blame;
 }
 div.App div.Overview div.Task p {
   margin: 5px;

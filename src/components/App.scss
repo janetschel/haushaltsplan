@@ -20,11 +20,54 @@ div.App {
 
   div.Overview {
     div.Task {
-      display: inline-block;
-      width: 250px;
+      display: grid;
+      grid-template-areas:
+              "chore toggleIcon editIcon"
+              "day day day"
+              "pic pic pic"
+              "blame blame blame";
+
+      grid-template-columns: 250px 35px 35px;
+      transition: background-color 0.25s ease-in-out;
+
+      width: 325px;
       border: 1px black solid;
       border-radius: 5px;
       margin: 5px;
+
+      svg.toggle {
+        grid-area: toggleIcon;
+        margin: 5px;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      svg.editIcon {
+        grid-area: editIcon;
+        margin: 5px;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      p.chore {
+        grid-area: chore;
+      }
+
+      p.day {
+        grid-area: day;
+      }
+
+      p.pic {
+        grid-area: pic;
+      }
+
+      span.blame {
+        grid-area: blame;
+      }
 
       p {
         margin: 5px;

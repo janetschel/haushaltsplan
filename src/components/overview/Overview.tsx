@@ -11,7 +11,9 @@ class Overview extends React.Component<Props, { tasks: [], error: boolean, autht
       tasks: [],
       error: false,
       authtoken: '',
-    }
+    };
+
+    this.getTasks = this.getTasks.bind(this);
   }
 
   componentDidMount(): void {
@@ -47,7 +49,7 @@ class Overview extends React.Component<Props, { tasks: [], error: boolean, autht
         <div className="Overview">
           <Typography variant="h4" className="heading">Haushaltsplaner</Typography>
           { !error && tasks.map((currentTask, index) =>
-              <Task authtoken={authtoken} key={index} currentTask={currentTask} />
+              <Task authtoken={authtoken} key={index} currentTask={currentTask} getTasks={this.getTasks}/>
           )}
           { error && <Typography color="secondary">Ungültiger oder fehlender Authentifizierungs-Token.</Typography>}
         </div>
