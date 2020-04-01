@@ -51,7 +51,9 @@ class Overview extends React.Component<Props, { tasks: [], error: boolean, autht
     }
   };
 
-  createNewTaskFromOldTask = async (oldId: string, day: string, chore: string, pic: string, blame: string) => {
+  createNewTaskFromOldTask =
+      async (oldId: string, day: string, chore: string, pic: string, blame: string, done: boolean) => {
+
     const { authtoken } = this.state;
     const dayForNewDocument = DayUtil.getDayTwoDaysFromDay(day);
 
@@ -64,7 +66,10 @@ class Overview extends React.Component<Props, { tasks: [], error: boolean, autht
     };
 
     await Api.addDocument(newDocument, authtoken);
-    await Api.deleteDocument(oldId, authtoken);
+
+    if (done) {
+      await Api.deleteDocument(oldId, authtoken);
+    }
   };
 
   render() {

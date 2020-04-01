@@ -96,7 +96,8 @@ class Task extends React.Component<Props, { isVisible: boolean }> {
 
 type Props = {
   currentTask: { id: string, day:string, chore: string, pic: string, blame: string, done: boolean },
-  createNewTaskFromOldTask: (oldId: string, day: string, chore: string, pic: string, blame: string) => void,
+  createNewTaskFromOldTask:
+      (oldId: string, day: string, chore: string, pic: string, blame: string, done: boolean) => void,
   authtoken: string,
   getTasks: () => void,
   username: string,

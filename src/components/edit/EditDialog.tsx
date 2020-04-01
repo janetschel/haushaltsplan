@@ -23,7 +23,7 @@ class EditDialog extends React.Component<Props, {}> {
     const { day, chore, pic} = currentTask;
     const blame = username.startsWith('jan') ? 'Jan' : 'Lea';
 
-    await createNewTaskFromOldTask(currentTask.id, day, chore, pic, blame);
+    await createNewTaskFromOldTask(currentTask.id, day, chore, pic, blame, currentTask.done);
     this.handleClose();
   };
 
@@ -62,7 +62,8 @@ class EditDialog extends React.Component<Props, {}> {
 
 type Props = {
   currentTask: { id: string, day:string, chore: string, pic: string, blame: string, done: boolean },
-  createNewTaskFromOldTask: (oldId: string, day: string, chore: string, pic: string, blame: string) => void,
+  createNewTaskFromOldTask:
+      (oldId: string, day: string, chore: string, pic: string, blame: string, done: boolean) => void,
   updateTaskComplete: (day: string, pic: string) => void,
   closeDialog: () => void,
   updateTask: () => void,
