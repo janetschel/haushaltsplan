@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dialog, DialogTitle, DialogContent, Typography, Tooltip} from '@material-ui/core';
+import {Dialog, DialogTitle, DialogContent, Typography } from '@material-ui/core';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import EditDialogDetails from "./EditDialogDetails";
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';

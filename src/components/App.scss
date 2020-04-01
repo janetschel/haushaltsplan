@@ -34,6 +34,7 @@ div.App {
       border: 1px black solid;
       border-radius: 5px;
       margin: 5px;
+      margin-left: 10px;
 
       svg.toggle {
         grid-area: toggleIcon;
@@ -94,6 +95,68 @@ div.App {
         grid-area: loggedInUser;
         color: gray;
         margin-top: 10px;
+      }
+    }
+
+    div.wrapper {
+      display: grid;
+      grid-template-areas: "add filter";
+      grid-template-columns: 1fr 1fr;
+
+      div.addWrapper {
+        display: grid;
+        grid-template-areas: "addIcon addHeading";
+        grid-template-columns: 50px 1fr;
+
+        grid-area: add;
+
+        margin-left: 10px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px lightgray solid;
+        border-radius: 5px;
+        transition: background-color 0.25s ease-in;
+
+        svg.addIcon {
+          grid-area: addIcon;
+        }
+
+        p.headingAdd {
+          grid-area: addHeading;
+        }
+
+        &:hover {
+          cursor: pointer;
+          background-color: rgba(211, 211, 211, 0.3);
+        }
+      }
+
+      div.filterWrapper {
+        display: grid;
+        grid-template-areas: "filterIcon filterHeading";
+        grid-template-columns: 50px 1fr;
+
+        grid-area: filter;
+
+        margin-left: 10px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px lightgray solid;
+        border-radius: 5px;
+        transition: background-color 0.25s ease-in;
+
+        svg.filterIcon {
+          grid-area: filterIcon;
+        }
+
+        p.headingFilter {
+          grid-area: filterHeading;
+        }
+
+        &:hover {
+          cursor: pointer;
+          background-color: rgba(211, 211, 211, 0.3);
+        }
       }
     }
   }
