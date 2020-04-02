@@ -6,5 +6,291 @@
 div.App {
   margin: 10px;
 }
+div.App div.LoginPrompt {
+  margin: 10px;
+}
+div.App div.LoginPrompt div.username, div.App div.LoginPrompt div.password {
+  margin: 20px 10px 0 0;
+}
+div.App div.LoginPrompt button.loginButton {
+  margin-top: 20px;
+}
+div.App div.Overview div.Task {
+  display: grid;
+  grid-template-areas: "chore toggleIcon editIcon" "day day day" "pic pic pic" "blame blame blame";
+  grid-template-columns: 250px 35px 35px;
+  transition: background-color 0.25s ease-in-out;
+  width: 325px;
+  border: 1px black solid;
+  border-radius: 5px;
+  margin: 5px;
+  margin-left: 10px;
+}
+div.App div.Overview div.Task svg.toggle {
+  grid-area: toggleIcon;
+  margin: 5px;
+}
+div.App div.Overview div.Task svg.toggle:hover {
+  cursor: pointer;
+}
+div.App div.Overview div.Task svg.editIcon {
+  grid-area: editIcon;
+  margin: 5px;
+}
+div.App div.Overview div.Task svg.editIcon:hover {
+  cursor: pointer;
+}
+div.App div.Overview div.Task p.chore {
+  grid-area: chore;
+}
+div.App div.Overview div.Task p.day {
+  grid-area: day;
+}
+div.App div.Overview div.Task p.pic {
+  grid-area: pic;
+}
+div.App div.Overview div.Task span.blame {
+  grid-area: blame;
+}
+div.App div.Overview div.Task p {
+  margin: 5px;
+}
+div.App div.Overview div.Task span {
+  margin: 5px;
+}
+div.App div.Overview div.headingWrapper {
+  display: grid;
+  grid-template-areas: "heading loggedInUser";
+  grid-template-columns: 1fr 200px;
+  margin-left: 10px;
+}
+div.App div.Overview div.headingWrapper h4.heading {
+  margin-bottom: 20px;
+  grid-area: heading;
+}
+div.App div.Overview div.headingWrapper span.loggedInUser {
+  grid-area: loggedInUser;
+  height: 20px;
+  color: gray;
+  margin-top: 10px;
+}
+div.App div.Overview div.headingWrapper span.loggedInUser:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+div.App div.Overview div.wrapper {
+  display: grid;
+  grid-template-areas: "add filter";
+  grid-template-columns: 1fr 1fr;
+}
+div.App div.Overview div.wrapper div.addWrapper {
+  display: grid;
+  grid-template-areas: "addIcon addHeading";
+  grid-template-columns: 50px 1fr;
+  grid-area: add;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px lightgray solid;
+  border-radius: 5px;
+  transition: background-color 0.25s ease-in;
+}
+div.App div.Overview div.wrapper div.addWrapper svg.addIcon {
+  grid-area: addIcon;
+}
+div.App div.Overview div.wrapper div.addWrapper p.headingAdd {
+  grid-area: addHeading;
+}
+div.App div.Overview div.wrapper div.addWrapper:hover {
+  cursor: pointer;
+  background-color: rgba(211, 211, 211, 0.3);
+}
+div.App div.Overview div.wrapper div.filterWrapper {
+  display: grid;
+  grid-template-areas: "filterIcon filterHeading";
+  grid-template-columns: 50px 1fr;
+  grid-area: filter;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px lightgray solid;
+  border-radius: 5px;
+  transition: background-color 0.25s ease-in;
+}
+div.App div.Overview div.wrapper div.filterWrapper svg.filterIcon {
+  grid-area: filterIcon;
+}
+div.App div.Overview div.wrapper div.filterWrapper p.headingFilter {
+  grid-area: filterHeading;
+}
+div.App div.Overview div.wrapper div.filterWrapper:hover {
+  cursor: pointer;
+  background-color: rgba(211, 211, 211, 0.3);
+}
+
+div.dialogContentAdd {
+  width: 500px;
+}
+div.dialogContentAdd div.contentWrapper {
+  display: grid;
+  grid-template-areas: "choreText choreInput" "dayText dayDropDown" "picText picDropDown" "abortButton saveButton";
+  grid-template-columns: 190px 1fr;
+  justify-items: left;
+  align-items: center;
+  column-gap: 10px;
+}
+div.dialogContentAdd div.contentWrapper p.choreText {
+  grid-area: choreText;
+  margin-bottom: 20px;
+}
+div.dialogContentAdd div.contentWrapper div.choreContent {
+  grid-area: choreInput;
+  margin-bottom: 20px;
+}
+div.dialogContentAdd div.contentWrapper p.day {
+  grid-area: dayText;
+}
+div.dialogContentAdd div.contentWrapper div.dropDownDayWrapper {
+  width: 200px;
+  margin-bottom: 10px;
+  grid-area: dayDropDown;
+}
+div.dialogContentAdd div.contentWrapper p.pic {
+  grid-area: picText;
+}
+div.dialogContentAdd div.contentWrapper div.dropDownPicWrapper {
+  width: 200px;
+  margin-bottom: 10px;
+  grid-area: picDropDown;
+}
+div.dialogContentAdd div.contentWrapper button {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+div.dialogContentAdd div.contentWrapper button.abortButton {
+  grid-area: abortButton;
+  width: 100%;
+}
+div.dialogContentAdd div.contentWrapper button.saveButton {
+  grid-area: saveButton;
+  width: 100%;
+}
+
+div.dialogContent {
+  width: 500px;
+}
+div.dialogContent div.contentWrapper div.deleteTask {
+  display: grid;
+  grid-template-areas: "deleteIcon deleteText";
+  grid-template-columns: 40px 1fr;
+  justify-items: left;
+  padding: 10px;
+  border: 1px lightgray solid;
+  border-radius: 5px;
+  transition: background-color 0.25s ease-in, border 0.1s ease-in;
+}
+div.dialogContent div.contentWrapper div.deleteTask svg.deleteIcon {
+  grid-area: deleteIcon;
+  margin-left: 5px;
+}
+div.dialogContent div.contentWrapper div.deleteTask p.deleteText {
+  grid-area: deleteText;
+}
+div.dialogContent div.contentWrapper div.deleteTask:hover {
+  cursor: pointer;
+  background-color: rgba(213, 80, 82, 0.1);
+  border: 1px red solid;
+}
+div.dialogContent div.contentWrapper div.moveTask {
+  display: grid;
+  grid-template-areas: "moveIcon moveText";
+  grid-template-columns: 40px 1fr;
+  justify-items: left;
+  padding: 10px;
+  border: 1px lightgray solid;
+  border-radius: 5px;
+  margin-top: 10px;
+  transition: background-color 0.25s ease-in;
+}
+div.dialogContent div.contentWrapper div.moveTask svg.moveIcon {
+  grid-area: moveIcon;
+  margin-left: 5px;
+}
+div.dialogContent div.contentWrapper div.moveTask p.moveText {
+  grid-area: moveText;
+}
+div.dialogContent div.contentWrapper div.moveTask:hover {
+  cursor: pointer;
+  background-color: rgba(211, 211, 211, 0.3);
+}
+div.dialogContent hr.hr {
+  margin-top: 20px;
+  width: 100%;
+}
+div.dialogContent div.dialogWrapper {
+  width: 100%;
+  margin-top: 20px;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails {
+  display: grid;
+  grid-template-areas: "chore choreContent choreContent" "day dayContent dayContent" "pic picContent picContent" "blame blameContent blameContent" "done doneContent helpDone" "abortButton . saveButton";
+  grid-template-columns: 200px 50px 1fr;
+  align-items: center;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails div.dropDownDayWrapper {
+  width: 200px;
+  margin-bottom: 10px;
+  grid-area: dayContent;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails div.dropDownPicWrapper {
+  width: 200px;
+  margin-bottom: 10px;
+  grid-area: picContent;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails button.abortButton, div.dialogContent div.dialogWrapper div.dialogContentDetails button.saveButton {
+  margin: 20px 0 10px 0;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails button.abortButton {
+  grid-area: abortButton;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails button.saveButton {
+  grid-area: saveButton;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p.chore {
+  grid-area: chore;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p.choreContent {
+  grid-area: choreContent;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p.day {
+  grid-area: day;
+  margin: 0;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p.pic {
+  grid-area: pic;
+  margin: 0;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p.blame {
+  grid-area: blame;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p.blameContent {
+  grid-area: blameContent;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p.done {
+  grid-area: done;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p.doneContent {
+  grid-area: doneContent;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails svg.helpDone {
+  grid-area: helpDone;
+  color: gray;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails svg.helpDone:hover {
+  cursor: pointer;
+}
+div.dialogContent div.dialogWrapper div.dialogContentDetails p {
+  margin-bottom: 10px;
+}
 
 /*# sourceMappingURL=App.css.map */

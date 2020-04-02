@@ -5,4 +5,385 @@
 
 div.App {
   margin: 10px;
+
+  div.LoginPrompt {
+    margin: 10px;
+
+    div.username, div.password {
+      margin: 20px 10px 0 0;
+    }
+
+    button.loginButton {
+      margin-top: 20px;
+    }
+  }
+
+  div.Overview {
+    div.Task {
+      display: grid;
+      grid-template-areas:
+              "chore toggleIcon editIcon"
+              "day day day"
+              "pic pic pic"
+              "blame blame blame";
+
+      grid-template-columns: 250px 35px 35px;
+      transition: background-color 0.25s ease-in-out;
+
+      width: 325px;
+      border: 1px black solid;
+      border-radius: 5px;
+      margin: 5px;
+      margin-left: 10px;
+
+      svg.toggle {
+        grid-area: toggleIcon;
+        margin: 5px;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      svg.editIcon {
+        grid-area: editIcon;
+        margin: 5px;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      p.chore {
+        grid-area: chore;
+      }
+
+      p.day {
+        grid-area: day;
+      }
+
+      p.pic {
+        grid-area: pic;
+      }
+
+      span.blame {
+        grid-area: blame;
+      }
+
+      p {
+        margin: 5px;
+      }
+
+      span {
+        margin: 5px;
+      }
+    }
+
+    div.headingWrapper {
+      display: grid;
+      grid-template-areas: "heading loggedInUser";
+      grid-template-columns: 1fr 200px;
+
+      margin-left: 10px;
+
+      h4.heading {
+        margin-bottom: 20px;
+        grid-area: heading;
+      }
+
+      span.loggedInUser {
+        grid-area: loggedInUser;
+        height: 20px;
+        color: gray;
+        margin-top: 10px;
+
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+
+    div.wrapper {
+      display: grid;
+      grid-template-areas: "add filter";
+      grid-template-columns: 1fr 1fr;
+
+      div.addWrapper {
+        display: grid;
+        grid-template-areas: "addIcon addHeading";
+        grid-template-columns: 50px 1fr;
+
+        grid-area: add;
+
+        margin-left: 10px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px lightgray solid;
+        border-radius: 5px;
+        transition: background-color 0.25s ease-in;
+
+        svg.addIcon {
+          grid-area: addIcon;
+        }
+
+        p.headingAdd {
+          grid-area: addHeading;
+        }
+
+        &:hover {
+          cursor: pointer;
+          background-color: rgba(211, 211, 211, 0.3);
+        }
+      }
+
+      div.filterWrapper {
+        display: grid;
+        grid-template-areas: "filterIcon filterHeading";
+        grid-template-columns: 50px 1fr;
+
+        grid-area: filter;
+
+        margin-left: 10px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px lightgray solid;
+        border-radius: 5px;
+        transition: background-color 0.25s ease-in;
+
+        svg.filterIcon {
+          grid-area: filterIcon;
+        }
+
+        p.headingFilter {
+          grid-area: filterHeading;
+        }
+
+        &:hover {
+          cursor: pointer;
+          background-color: rgba(211, 211, 211, 0.3);
+        }
+      }
+    }
+  }
+}
+
+div.dialogContentAdd {
+  width: 500px;
+
+  div.contentWrapper {
+    display: grid;
+    grid-template-areas:
+            "choreText choreInput"
+            "dayText dayDropDown"
+            "picText picDropDown"
+            "abortButton saveButton";
+
+    grid-template-columns: 190px 1fr;
+    justify-items: left;
+    align-items: center;
+    column-gap: 10px;
+
+    p.choreText {
+      grid-area: choreText;
+      margin-bottom: 20px;
+    }
+
+    div.choreContent {
+      grid-area: choreInput;
+      margin-bottom: 20px;
+    }
+
+    p.day {
+      grid-area: dayText;
+    }
+
+    div.dropDownDayWrapper {
+      width: 200px;
+      margin-bottom: 10px;
+      grid-area: dayDropDown;
+    }
+
+    p.pic {
+      grid-area: picText;
+    }
+
+    div.dropDownPicWrapper {
+      width: 200px;
+      margin-bottom: 10px;
+      grid-area: picDropDown;
+    }
+
+    button {
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    button.abortButton {
+      grid-area: abortButton;
+      width: 100%;
+    }
+
+    button.saveButton {
+      grid-area: saveButton;
+      width: 100%;
+    }
+  }
+}
+
+div.dialogContent {
+  width: 500px;
+
+  div.contentWrapper {
+    div.deleteTask {
+      display: grid;
+      grid-template-areas: "deleteIcon deleteText";
+      grid-template-columns: 40px 1fr;
+      justify-items: left;
+
+      padding: 10px;
+      border: 1px lightgray solid;
+      border-radius: 5px;
+
+      transition: background-color 0.25s ease-in, border 0.1s ease-in;
+
+      svg.deleteIcon {
+        grid-area: deleteIcon;
+        margin-left: 5px;
+      }
+
+      p.deleteText {
+        grid-area: deleteText;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: rgba(213, 80, 82, 0.1);
+        border: 1px red solid;
+      }
+    }
+
+    div.moveTask {
+      display: grid;
+      grid-template-areas: "moveIcon moveText";
+      grid-template-columns: 40px 1fr;
+      justify-items: left;
+
+      padding: 10px;
+      border: 1px lightgray solid;
+      border-radius: 5px;
+      margin-top: 10px;
+
+      transition: background-color 0.25s ease-in;
+
+      svg.moveIcon {
+        grid-area: moveIcon;
+        margin-left: 5px;
+      }
+
+      p.moveText {
+        grid-area: moveText;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: rgba(211, 211, 211, 0.3);
+      }
+    }
+  }
+
+  hr.hr {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  div.dialogWrapper {
+    width: 100%;
+    margin-top: 20px;
+
+    div.dialogContentDetails {
+      display: grid;
+      grid-template-areas:
+              "chore choreContent choreContent"
+              "day dayContent dayContent"
+              "pic picContent picContent"
+              "blame blameContent blameContent"
+              "done doneContent helpDone"
+              "abortButton . saveButton";
+
+      grid-template-columns: 200px 50px 1fr;
+      align-items: center;
+
+      div.dropDownDayWrapper {
+        width: 200px;
+        margin-bottom: 10px;
+        grid-area: dayContent;
+      }
+
+      div.dropDownPicWrapper {
+        width: 200px;
+        margin-bottom: 10px;
+        grid-area: picContent;
+      }
+
+      button.abortButton, button.saveButton {
+        margin: 20px 0 10px 0;
+      }
+
+      button.abortButton {
+        grid-area: abortButton;
+      }
+
+      button.saveButton {
+        grid-area: saveButton;
+      }
+
+      p.chore {
+        grid-area: chore;
+      }
+
+      p.choreContent {
+        grid-area: choreContent;
+      }
+
+      p.day {
+        grid-area: day;
+        margin: 0;
+      }
+
+      p.pic {
+        grid-area: pic;
+        margin: 0;
+      }
+
+      p.blame {
+        grid-area: blame;
+      }
+
+      p.blameContent {
+        grid-area: blameContent;
+      }
+
+      p.done {
+        grid-area: done;
+      }
+
+      p.doneContent {
+        grid-area: doneContent;
+      }
+
+      svg.helpDone {
+        grid-area: helpDone;
+        color: gray;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      p {
+        margin-bottom: 10px;
+      }
+    }
+  }
 }
