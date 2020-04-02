@@ -93,8 +93,14 @@ div.App {
 
       span.loggedInUser {
         grid-area: loggedInUser;
+        height: 20px;
         color: gray;
         margin-top: 10px;
+
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
       }
     }
 
@@ -158,6 +164,69 @@ div.App {
           background-color: rgba(211, 211, 211, 0.3);
         }
       }
+    }
+  }
+}
+
+div.dialogContentAdd {
+  width: 500px;
+
+  div.contentWrapper {
+    display: grid;
+    grid-template-areas:
+            "choreText choreInput"
+            "dayText dayDropDown"
+            "picText picDropDown"
+            "abortButton saveButton";
+
+    grid-template-columns: 190px 1fr;
+    justify-items: left;
+    align-items: center;
+    column-gap: 10px;
+
+    p.choreText {
+      grid-area: choreText;
+      margin-bottom: 20px;
+    }
+
+    div.choreContent {
+      grid-area: choreInput;
+      margin-bottom: 20px;
+    }
+
+    p.day {
+      grid-area: dayText;
+    }
+
+    div.dropDownDayWrapper {
+      width: 200px;
+      margin-bottom: 10px;
+      grid-area: dayDropDown;
+    }
+
+    p.pic {
+      grid-area: picText;
+    }
+
+    div.dropDownPicWrapper {
+      width: 200px;
+      margin-bottom: 10px;
+      grid-area: picDropDown;
+    }
+
+    button {
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    button.abortButton {
+      grid-area: abortButton;
+      width: 100%;
+    }
+
+    button.saveButton {
+      grid-area: saveButton;
+      width: 100%;
     }
   }
 }

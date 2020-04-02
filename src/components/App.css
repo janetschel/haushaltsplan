@@ -70,8 +70,13 @@ div.App div.Overview div.headingWrapper h4.heading {
 }
 div.App div.Overview div.headingWrapper span.loggedInUser {
   grid-area: loggedInUser;
+  height: 20px;
   color: gray;
   margin-top: 10px;
+}
+div.App div.Overview div.headingWrapper span.loggedInUser:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 div.App div.Overview div.wrapper {
   display: grid;
@@ -121,6 +126,54 @@ div.App div.Overview div.wrapper div.filterWrapper p.headingFilter {
 div.App div.Overview div.wrapper div.filterWrapper:hover {
   cursor: pointer;
   background-color: rgba(211, 211, 211, 0.3);
+}
+
+div.dialogContentAdd {
+  width: 500px;
+}
+div.dialogContentAdd div.contentWrapper {
+  display: grid;
+  grid-template-areas: "choreText choreInput" "dayText dayDropDown" "picText picDropDown" "abortButton saveButton";
+  grid-template-columns: 190px 1fr;
+  justify-items: left;
+  align-items: center;
+  column-gap: 10px;
+}
+div.dialogContentAdd div.contentWrapper p.choreText {
+  grid-area: choreText;
+  margin-bottom: 20px;
+}
+div.dialogContentAdd div.contentWrapper div.choreContent {
+  grid-area: choreInput;
+  margin-bottom: 20px;
+}
+div.dialogContentAdd div.contentWrapper p.day {
+  grid-area: dayText;
+}
+div.dialogContentAdd div.contentWrapper div.dropDownDayWrapper {
+  width: 200px;
+  margin-bottom: 10px;
+  grid-area: dayDropDown;
+}
+div.dialogContentAdd div.contentWrapper p.pic {
+  grid-area: picText;
+}
+div.dialogContentAdd div.contentWrapper div.dropDownPicWrapper {
+  width: 200px;
+  margin-bottom: 10px;
+  grid-area: picDropDown;
+}
+div.dialogContentAdd div.contentWrapper button {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+div.dialogContentAdd div.contentWrapper button.abortButton {
+  grid-area: abortButton;
+  width: 100%;
+}
+div.dialogContentAdd div.contentWrapper button.saveButton {
+  grid-area: saveButton;
+  width: 100%;
 }
 
 div.dialogContent {

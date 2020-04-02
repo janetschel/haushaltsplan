@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dialog, DialogContent, DialogTitle} from "@material-ui/core";
+import { Dialog, DialogContent, DialogTitle, Typography } from "@material-ui/core";
 
 class FilterTaskDialog extends React.Component<Props, {}> {
   handleClose = () => {
@@ -14,7 +14,7 @@ class FilterTaskDialog extends React.Component<Props, {}> {
         <Dialog open={isVisible} onClose={this.handleClose} className="EditDialog">
           <DialogTitle className="dialogTitle">Filtern der Aufgaben</DialogTitle>
           <DialogContent className="dialogContent">
-            Dummy content for now.. Filter task dialog
+            <Typography>Die Filter-Komponente ist noch nicht implementiert</Typography>
           </DialogContent>
         </Dialog>
     );

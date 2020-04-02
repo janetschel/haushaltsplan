@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@material-ui/core'
+import {Typography} from '@material-ui/core'
 import Api from '../../api/Api';
 import Task from './Task';
 import DayUtil from "../utils/DayUtil";
@@ -26,6 +26,7 @@ class Overview extends React.Component<Props,
 
     this.getTasks = this.getTasks.bind(this);
     this.createNewTaskFromOldTask = this.createNewTaskFromOldTask.bind(this);
+    this.createNewTask = this.createNewTask.bind(this);
     this.handleAddDialogClose = this.handleAddDialogClose.bind(this);
     this.handleFilterDialogClose = this.handleFilterDialogClose.bind(this);
   }
@@ -83,6 +84,22 @@ class Overview extends React.Component<Props,
     }
   };
 
+  createNewTask = async (chore: string, day: string, pic: string) => {
+    const { authtoken, username } = this.state;
+    const blame = username.startsWith('jan') ? 'Jan' : 'Lea';
+
+    const newDocument = {
+      day: day,
+      chore: chore,
+      pic: pic,
+      blame: blame,
+      done: false,
+    };
+
+    await Api.addDocument(newDocument, authtoken);
+    await this.getTasks();
+  };
+
   handleAddDialogOpen = async () =>
       await this.setState({ addDialogIsVisbile: true });
 
@@ -95,6 +112,9 @@ class Overview extends React.Component<Props,
   handleFilterDialogClose = async () =>
       await this.setState({ filterDialogIsVisible: false });
 
+  logoutUser = () =>
+    window.location.reload();
+
   render() {
     const { tasks, error, authtoken, username, addDialogIsVisbile, filterDialogIsVisible } = this.state;
 
@@ -102,7 +122,13 @@ class Overview extends React.Component<Props,
         <div className="Overview">
           <div className="headingWrapper" >
             <Typography variant="h4" className="heading">Haushaltsplaner</Typography>
-            <Typography variant="caption" className="loggedInUser">Eingeloggt als {username}</Typography>
+              <Typography
+                  variant="caption"
+                  className="loggedInUser"
+                  onClick={this.logoutUser}
+              >
+                Eingeloggt als {username}
+              </Typography>
           </div>
           <div className="wrapper">
             <div className="addWrapper" onClick={this.handleAddDialogOpen}>
@@ -125,7 +151,11 @@ class Overview extends React.Component<Props,
               />
           )}
           { error && <Typography color="secondary">Ungültiger oder fehlender Authentifizierungs-Token.</Typography>}
-        <AddTaskDialog isVisible={addDialogIsVisbile} closeDialog={this.handleAddDialogClose} />
+        <AddTaskDialog
+            isVisible={addDialogIsVisbile}
+            closeDialog={this.handleAddDialogClose}
+            createNewTask={this.createNewTask}
+        />
         <FilterTaskDialog isVisible={filterDialogIsVisible} closeDialog={this.handleFilterDialogClose} />
         </div>
     );

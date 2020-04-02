@@ -1,7 +1,6 @@
 import React from 'react';
 import Overview from './overview/Overview';
 import LoginPrompt from './login/LoginPrompt';
-
 import './App.css';
 import Api from "../api/Api";
 
