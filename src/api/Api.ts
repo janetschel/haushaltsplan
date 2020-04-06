@@ -3,12 +3,12 @@ import RequestMethods from "./RequestMethods";
 
 const backendUrl = Config.getBackendUrl();
 
-const request = async (path: string, method: RequestMethods, authtoken: string) => {
+const request = async (path: string, authtoken: string) => {
   const backendUrl = Config.getBackendUrl();
   const fetchUrl = `${backendUrl}${path}?token=${authtoken}`;
 
   const response = await fetch(fetchUrl, {
-    method: method,
+    method: RequestMethods.GET,
   });
 
   if (response.status === 400 || response.status === 403) {
@@ -18,11 +18,11 @@ const request = async (path: string, method: RequestMethods, authtoken: string) 
   return response;
 };
 
-const requestWithBody = async (path: string, method: RequestMethods, body: any, authtoken: string) => {
+const requestWithBody = async (path: string, body: any, authtoken: string) => {
   const fetchUrl = `${backendUrl}${path}?token=${authtoken}`;
 
   const response = await fetch(fetchUrl, {
-    method: method,
+    method: RequestMethods.GET,
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
@@ -50,19 +50,19 @@ const getAuthToken = async (base64String: string) => {
 };
 
 const healthCheck = async (authtoken: string) =>
-    await request('/healthcheck', RequestMethods.GET, authtoken);
+    await request('/healthcheck', authtoken);
 
 const getDocuments = async (authtoken: string) =>
-  await request('/getDocuments', RequestMethods.GET, authtoken);
+  await request('/getDocuments', authtoken);
 
 const addDocument = async (document: {}, authtoken: string) =>
-    await requestWithBody('/addDocument', RequestMethods.POST, document, authtoken);
+    await requestWithBody('/addDocument', document, authtoken);
 
 const updateDocument = async (document: {}, authtoken: string) =>
-    await requestWithBody('/updateDocument', RequestMethods.PUT, document, authtoken);
+    await requestWithBody('/updateDocument', document, authtoken);
 
 const deleteDocument = async (id: string, authtoken: string) =>
-    await request(`/deleteDocument?id=${id}`, RequestMethods.DELETE, authtoken);
+    await request(`/deleteDocument?id=${id}`, authtoken);
 
 const Api = {
   login,
