@@ -3,16 +3,12 @@ import RequestMethods from "./RequestMethods";
 
 const backendUrl = Config.getBackendUrl();
 
-
 const request = async (path: string, method: RequestMethods, authtoken: string) => {
   const backendUrl = Config.getBackendUrl();
-  const fetchUrl = `${backendUrl}${path}`;
+  const fetchUrl = `${backendUrl}${path}?token=${authtoken}`;
 
   const response = await fetch(fetchUrl, {
     method: method,
-    headers: {
-      'Auth-Token': authtoken
-    }
   });
 
   if (response.status === 400 || response.status === 403) {
@@ -23,14 +19,13 @@ const request = async (path: string, method: RequestMethods, authtoken: string) 
 };
 
 const requestWithBody = async (path: string, method: RequestMethods, body: any, authtoken: string) => {
-  const fetchUrl = `${backendUrl}${path}`;
+  const fetchUrl = `${backendUrl}${path}?token=${authtoken}`;
 
   const response = await fetch(fetchUrl, {
     method: method,
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Auth-Token': authtoken
     },
     body: JSON.stringify(body)
   });
@@ -43,25 +38,15 @@ const requestWithBody = async (path: string, method: RequestMethods, body: any, 
 };
 
 const login = async (base64String: string) => {
-  const fetchUrl = `${backendUrl}/login`;
+  const fetchUrl = `${backendUrl}/login?auth=${base64String}`;
 
-  return await fetch(fetchUrl, {
-    method: 'GET',
-    headers: {
-      'Authorization': base64String
-    }
-  });
+  return await fetch(fetchUrl);
 };
 
 const getAuthToken = async (base64String: string) => {
-  const fetchUrl = `${backendUrl}/getAuthToken`;
+  const fetchUrl = `${backendUrl}/getAuthToken?auth=${base64String}`;
 
-  return await fetch(fetchUrl, {
-    method: 'GET',
-    headers: {
-      'Authorization': base64String
-    }
-  });
+  return await fetch(fetchUrl);
 };
 
 const healthCheck = async (authtoken: string) =>
