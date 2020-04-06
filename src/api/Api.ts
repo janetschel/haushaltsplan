@@ -1,5 +1,4 @@
 import Config from "../config";
-import RequestMethods from "./RequestMethods";
 
 const backendUrl = Config.getBackendUrl();
 
@@ -7,9 +6,7 @@ const request = async (path: string, authtoken: string) => {
   const backendUrl = Config.getBackendUrl();
   const fetchUrl = `${backendUrl}${path}?token=${authtoken}`;
 
-  const response = await fetch(fetchUrl, {
-    method: RequestMethods.GET,
-  });
+  const response = await fetch(fetchUrl);
 
   if (response.status === 400 || response.status === 403) {
     throw new Error("Request rejected due to auth-token invalid or missing");
@@ -19,16 +16,15 @@ const request = async (path: string, authtoken: string) => {
 };
 
 const requestWithBody = async (path: string, body: any, authtoken: string) => {
-  const fetchUrl = `${backendUrl}${path}?token=${authtoken}`;
+  let fetchUrl = `${backendUrl}${path}?token=${authtoken}`;
 
-  const response = await fetch(fetchUrl, {
-    method: RequestMethods.GET,
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body)
-  });
+  for (const eachEntry in body){
+    if (body.hasOwnProperty(eachEntry)) {
+      fetchUrl += `&${eachEntry}=${body[eachEntry]}`;
+    }
+  }
+
+  const response = await fetch(fetchUrl);
 
   if (response.status === 400 || response.status === 403) {
     throw new Error("Request rejected due to auth-token invalid or missing");
