@@ -33,6 +33,19 @@ const requestWithBody = async (path: string, body: any, authtoken: string) => {
   return response;
 };
 
+const requestWithId = async (path: string, id: string, authtoken: string) => {
+  const backendUrl = Config.getBackendUrl();
+  const fetchUrl = `${backendUrl}${path}?token=${authtoken}&id=${id}`;
+
+  const response = await fetch(fetchUrl);
+
+  if (response.status === 400 || response.status === 403) {
+    throw new Error("Request rejected due to auth-token invalid or missing");
+  }
+
+  return response;
+};
+
 const login = async (base64String: string) => {
   const fetchUrl = `${backendUrl}/login?auth=${base64String}`;
 
@@ -58,7 +71,7 @@ const updateDocument = async (document: {}, authtoken: string) =>
     await requestWithBody('/updateDocument', document, authtoken);
 
 const deleteDocument = async (id: string, authtoken: string) =>
-    await request(`/deleteDocument?id=${id}`, authtoken);
+    await requestWithId(`/deleteDocument`, id, authtoken);
 
 const Api = {
   login,
