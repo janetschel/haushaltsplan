@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dialog, DialogContent, DialogTitle, Typography } from "@material-ui/core";
 
-class FilterTaskDialog extends React.Component<Props, {}> {
+class SettingsDialog extends React.Component<Props, {}> {
   handleClose = () => {
     const { closeDialog } = this.props;
     closeDialog();
@@ -12,9 +12,9 @@ class FilterTaskDialog extends React.Component<Props, {}> {
 
     return(
         <Dialog open={isVisible} onClose={this.handleClose} className="EditDialog">
-          <DialogTitle className="dialogTitle">Filtern der Aufgaben</DialogTitle>
+          <DialogTitle className="dialogTitle">Benutzer-Einstellungen</DialogTitle>
           <DialogContent className="dialogContent">
-            <Typography>Die Filter-Komponente ist noch nicht implementiert</Typography>
+            <Typography>Die Einstellungs-Komponente ist noch nicht implementiert..</Typography>
           </DialogContent>
         </Dialog>
     );
@@ -26,4 +26,4 @@ type Props = {
   closeDialog: () => void,
 }
 
-export default FilterTaskDialog;
+export default SettingsDialog;
