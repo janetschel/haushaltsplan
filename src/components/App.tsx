@@ -8,6 +8,9 @@ class App extends React.Component<{}, { tasks: [], userIsLoggedIn: boolean, auth
   constructor({props}: { props: any }) {
     super(props);
 
+    // Used to wake up backend from sleep on deployment
+    this.wakeup();
+
     this.state = {
       tasks: [],
       userIsLoggedIn: false,
@@ -17,6 +20,11 @@ class App extends React.Component<{}, { tasks: [], userIsLoggedIn: boolean, auth
 
     this.userLoggingIn = this.userLoggingIn.bind(this);
   }
+
+  wakeup = async () => {
+    const response = await (await Api.healthCheck()).text();
+    console.log(response);
+  };
 
   userLoggingIn = async (username: string, password: string) => {
     const base64String = btoa(`${username}:${password}`);
