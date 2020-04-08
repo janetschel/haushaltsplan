@@ -7,7 +7,6 @@ Das Frontend schickt Requests an das [Backend vom Haushaltplaner-Tool](https://g
 
 
 ## Status vom Frontend
-*Falls heroku = unkown, dann sleept das Deployment der Application* 
 
 [![Heroku App Status](http://heroku-shields.herokuapp.com/haushaltsplan)](https://haushaltsplan.herokuapp.com)
 [![Deployment Status](https://img.shields.io/github/deployments/janetschel/haushaltsplan/haushaltsplan?label=state%20of%20deployment)](https://haushaltsplan-backend.herokuapp.com/healthcheck)
