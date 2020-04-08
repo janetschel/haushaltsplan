@@ -106,6 +106,9 @@ class Overview extends React.Component<Props,
     await this.getTasks();
   };
 
+  translateDay = (dayToTranslate: string) =>
+      Translator.translateDay(dayToTranslate);
+
   handleAddDialogOpen = async () =>
       await this.setState({ addDialogIsVisbile: true });
 
@@ -126,7 +129,7 @@ class Overview extends React.Component<Props,
       tasks,
       error,
       authtoken,
-      username, 
+      username,
       addDialogIsVisbile,
       settingDialogIsVisible,
       weekdays,
@@ -159,7 +162,7 @@ class Overview extends React.Component<Props,
             <div className="gridTask">
               { weekdays.map(weekday =>
                   <div className={weekday} key={weekday}>
-                    <Typography className="columnHeading" variant="h6">{Translator.translateDay(weekday)}</Typography>
+                    <Typography className="columnHeading" variant="h6">{this.translateDay(weekday)}</Typography>
                     { initialFetchComplete && !error && tasks.filter(currentTask => currentTask.day === weekday).map((currentTask, index) =>
                         <Task
                             authtoken={authtoken}
