@@ -15,7 +15,56 @@ div.App div.LoginPrompt div.username, div.App div.LoginPrompt div.password {
 div.App div.LoginPrompt button.loginButton {
   margin-top: 20px;
 }
-div.App div.Overview div.Task {
+div.App div.Overview div.taskWrapper {
+  overflow: scroll;
+  margin-top: 40px;
+}
+div.App div.Overview div.taskWrapper div.gridTask {
+  display: grid;
+  grid-template-areas: "monday tuesday wednesday thursday friday saturday sunday";
+  grid-template-columns: repeat(7, 367px);
+  grid-template-rows: auto;
+}
+div.App div.Overview div.taskWrapper div.gridTask div.monday {
+  padding: 20px;
+  border-left: 1px solid gray;
+  grid-area: monday;
+}
+div.App div.Overview div.taskWrapper div.gridTask div.tuesday {
+  padding: 20px;
+  border-left: 1px solid gray;
+  grid-area: tuesday;
+}
+div.App div.Overview div.taskWrapper div.gridTask div.wednesday {
+  padding: 20px;
+  border-left: 1px solid gray;
+  grid-area: wednesday;
+}
+div.App div.Overview div.taskWrapper div.gridTask div.thursday {
+  padding: 20px;
+  border-left: 1px solid gray;
+  grid-area: thursday;
+}
+div.App div.Overview div.taskWrapper div.gridTask div.friday {
+  padding: 20px;
+  border-left: 1px solid gray;
+  grid-area: friday;
+}
+div.App div.Overview div.taskWrapper div.gridTask div.saturday {
+  padding: 20px;
+  border-left: 1px solid gray;
+  grid-area: saturday;
+}
+div.App div.Overview div.taskWrapper div.gridTask div.sunday {
+  padding: 20px;
+  border-left: 1px solid gray;
+  grid-area: sunday;
+}
+div.App div.Overview div.taskWrapper div.gridTask h6.columnHeading {
+  margin-left: 120px;
+  margin-bottom: 20px;
+}
+div.App div.Overview div.taskWrapper div.gridTask div.Task {
   display: grid;
   grid-template-areas: "chore toggleIcon editIcon" "day day day" "pic pic pic" "blame blame blame";
   grid-template-columns: 250px 35px 35px;
@@ -23,46 +72,44 @@ div.App div.Overview div.Task {
   width: 325px;
   border: 1px black solid;
   border-radius: 5px;
-  margin: 5px;
-  margin-left: 10px;
+  margin-bottom: 10px;
 }
-div.App div.Overview div.Task svg.toggle {
+div.App div.Overview div.taskWrapper div.gridTask div.Task svg.toggle {
   grid-area: toggleIcon;
   margin: 5px;
 }
-div.App div.Overview div.Task svg.toggle:hover {
+div.App div.Overview div.taskWrapper div.gridTask div.Task svg.toggle:hover {
   cursor: pointer;
 }
-div.App div.Overview div.Task svg.editIcon {
+div.App div.Overview div.taskWrapper div.gridTask div.Task svg.editIcon {
   grid-area: editIcon;
   margin: 5px;
 }
-div.App div.Overview div.Task svg.editIcon:hover {
+div.App div.Overview div.taskWrapper div.gridTask div.Task svg.editIcon:hover {
   cursor: pointer;
 }
-div.App div.Overview div.Task p.chore {
+div.App div.Overview div.taskWrapper div.gridTask div.Task p.chore {
   grid-area: chore;
 }
-div.App div.Overview div.Task p.day {
+div.App div.Overview div.taskWrapper div.gridTask div.Task p.day {
   grid-area: day;
 }
-div.App div.Overview div.Task p.pic {
+div.App div.Overview div.taskWrapper div.gridTask div.Task p.pic {
   grid-area: pic;
 }
-div.App div.Overview div.Task span.blame {
+div.App div.Overview div.taskWrapper div.gridTask div.Task span.blame {
   grid-area: blame;
 }
-div.App div.Overview div.Task p {
+div.App div.Overview div.taskWrapper div.gridTask div.Task p {
   margin: 5px;
 }
-div.App div.Overview div.Task span {
+div.App div.Overview div.taskWrapper div.gridTask div.Task span {
   margin: 5px;
 }
 div.App div.Overview div.headingWrapper {
   display: grid;
   grid-template-areas: "heading loggedInUser";
   grid-template-columns: 1fr 200px;
-  margin-left: 10px;
 }
 div.App div.Overview div.headingWrapper h4.heading {
   margin-bottom: 20px;
@@ -78,52 +125,50 @@ div.App div.Overview div.headingWrapper span.loggedInUser:hover {
   text-decoration: underline;
   cursor: pointer;
 }
-div.App div.Overview div.wrapper {
+div.App div.Overview div.functionsWrapper {
   display: grid;
-  grid-template-areas: "add filter";
-  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "add settings";
+  grid-template-columns: 1fr 90px;
 }
-div.App div.Overview div.wrapper div.addWrapper {
+div.App div.Overview div.functionsWrapper div.addWrapper {
   display: grid;
   grid-template-areas: "addIcon addHeading";
   grid-template-columns: 50px 1fr;
   grid-area: add;
-  margin-left: 10px;
   margin-bottom: 20px;
   padding: 10px;
   border: 1px lightgray solid;
   border-radius: 5px;
   transition: background-color 0.25s ease-in;
 }
-div.App div.Overview div.wrapper div.addWrapper svg.addIcon {
+div.App div.Overview div.functionsWrapper div.addWrapper svg.addIcon {
   grid-area: addIcon;
 }
-div.App div.Overview div.wrapper div.addWrapper p.headingAdd {
+div.App div.Overview div.functionsWrapper div.addWrapper p.headingAdd {
   grid-area: addHeading;
 }
-div.App div.Overview div.wrapper div.addWrapper:hover {
+div.App div.Overview div.functionsWrapper div.addWrapper:hover {
   cursor: pointer;
   background-color: rgba(211, 211, 211, 0.3);
 }
-div.App div.Overview div.wrapper div.filterWrapper {
+div.App div.Overview div.functionsWrapper div.settingWrapper {
   display: grid;
-  grid-template-areas: "filterIcon filterHeading";
-  grid-template-columns: 50px 1fr;
-  grid-area: filter;
+  grid-template-areas: "settingIcon";
+  grid-template-columns: 50px;
+  grid-area: settings;
   margin-left: 10px;
   margin-bottom: 20px;
   padding: 10px;
   border: 1px lightgray solid;
   border-radius: 5px;
   transition: background-color 0.25s ease-in;
+  justify-items: center;
 }
-div.App div.Overview div.wrapper div.filterWrapper svg.filterIcon {
-  grid-area: filterIcon;
+div.App div.Overview div.functionsWrapper div.settingWrapper svg.settingsIcon {
+  grid-area: settingIcon;
+  margin-left: 5px;
 }
-div.App div.Overview div.wrapper div.filterWrapper p.headingFilter {
-  grid-area: filterHeading;
-}
-div.App div.Overview div.wrapper div.filterWrapper:hover {
+div.App div.Overview div.functionsWrapper div.settingWrapper:hover {
   cursor: pointer;
   background-color: rgba(211, 211, 211, 0.3);
 }

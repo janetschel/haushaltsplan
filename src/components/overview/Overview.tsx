@@ -4,31 +4,36 @@ import Api from '../../api/Api';
 import Task from './Task';
 import DayUtil from "../utils/DayUtil";
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-import TabUnselectedIcon from '@material-ui/icons/TabUnselected';
 import AddTaskDialog from "./AddTaskDialog";
-import FilterTaskDialog from "./FilterTaskDialog";
+import SettingsDialog from "./SettingsDialog";
+import Translator from "../utils/Translator";
+import SettingsIcon from '@material-ui/icons/Settings';
 
 class Overview extends React.Component<Props,
-    { tasks: [], error: boolean, authtoken: string, username: string,
-      addDialogIsVisbile: boolean, filterDialogIsVisible: boolean }> {
+    { tasks: [{id: string, day: string, chore: string, pic: string, blame: string, done: boolean}],
+      error: boolean, authtoken: string, username: string,
+      addDialogIsVisbile: boolean, settingDialogIsVisible: boolean, initialFetchComplete: boolean,
+      weekdays: [string, string, string, string, string, string, string]}> {
 
   constructor({props}: { props: any }) {
     super(props);
 
     this.state = {
-      tasks: [],
+      weekdays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+      tasks: [{id: "1", day: "monday", chore: "Kochen", pic: "Jan", blame: "Jan", done: false}],
       error: false,
       authtoken: '',
       username: '',
       addDialogIsVisbile: false,
-      filterDialogIsVisible: false,
+      settingDialogIsVisible: false,
+      initialFetchComplete: false,
     };
 
     this.getTasks = this.getTasks.bind(this);
     this.createNewTaskFromOldTask = this.createNewTaskFromOldTask.bind(this);
     this.createNewTask = this.createNewTask.bind(this);
     this.handleAddDialogClose = this.handleAddDialogClose.bind(this);
-    this.handleFilterDialogClose = this.handleFilterDialogClose.bind(this);
+    this.handleSettingDialogClose = this.handleSettingDialogClose.bind(this);
   }
 
   componentDidMount(): void {
@@ -57,6 +62,7 @@ class Overview extends React.Component<Props,
     try {
       const tasks = await (await Api.getDocuments(authtoken)).json();
       await this.setState({ tasks: tasks });
+      await this.setState({ initialFetchComplete: true});
     } catch (error) {
       console.error(error);
       await this.setState({ error: true });
@@ -100,23 +106,35 @@ class Overview extends React.Component<Props,
     await this.getTasks();
   };
 
+  translateDay = (dayToTranslate: string) =>
+      Translator.translateDay(dayToTranslate);
+
   handleAddDialogOpen = async () =>
       await this.setState({ addDialogIsVisbile: true });
 
   handleAddDialogClose = async () =>
       await this.setState({ addDialogIsVisbile: false });
 
-  handleFilterDialogOpen = async () =>
-      await this.setState({ filterDialogIsVisible: true });
+  handleSettingDialogOpen = async () =>
+      await this.setState({ settingDialogIsVisible: true });
 
-  handleFilterDialogClose = async () =>
-      await this.setState({ filterDialogIsVisible: false });
+  handleSettingDialogClose = async () =>
+      await this.setState({ settingDialogIsVisible: false });
 
   logoutUser = () =>
     window.location.reload();
 
   render() {
-    const { tasks, error, authtoken, username, addDialogIsVisbile, filterDialogIsVisible } = this.state;
+    const {
+      tasks,
+      error,
+      authtoken,
+      username,
+      addDialogIsVisbile,
+      settingDialogIsVisible,
+      weekdays,
+      initialFetchComplete
+    } = this.state;
 
     return(
         <div className="Overview">
@@ -130,33 +148,42 @@ class Overview extends React.Component<Props,
                 Eingeloggt als {username}
               </Typography>
           </div>
-          <div className="wrapper">
+          <div className="functionsWrapper">
             <div className="addWrapper" onClick={this.handleAddDialogOpen}>
               <AddCircleOutlineOutlinedIcon className="addIcon" />
               <Typography className="headingAdd">Neue Aufgabe erstellen</Typography>
             </div>
-            <div className="filterWrapper" onClick={this.handleFilterDialogOpen}>
-              <TabUnselectedIcon className="filterIcon" />
-              <Typography className="headingFilter">Aufgaben filtern</Typography>
+            <div className="settingWrapper" onClick={this.handleSettingDialogOpen}>
+              <SettingsIcon className="settingsIcon" />
             </div>
           </div>
-          { !error && tasks.map((currentTask, index) =>
-              <Task
-                  authtoken={authtoken}
-                  key={index}
-                  currentTask={currentTask}
-                  getTasks={this.getTasks}
-                  username={username}
-                  createNewTaskFromOldTask={this.createNewTaskFromOldTask}
-              />
-          )}
-          { error && <Typography color="secondary">Ungültiger oder fehlender Authentifizierungs-Token.</Typography>}
+          <hr />
+          <div className="taskWrapper">
+            <div className="gridTask">
+              { weekdays.map(weekday =>
+                  <div className={weekday} key={weekday}>
+                    <Typography className="columnHeading" variant="h6">{this.translateDay(weekday)}</Typography>
+                    { initialFetchComplete && !error && tasks.filter(currentTask => currentTask.day === weekday).map((currentTask, index) =>
+                        <Task
+                            authtoken={authtoken}
+                            key={index}
+                            currentTask={currentTask}
+                            getTasks={this.getTasks}
+                            username={username}
+                            createNewTaskFromOldTask={this.createNewTaskFromOldTask}
+                        />
+                    )}
+                  </div>
+              )}
+              { error && <Typography color="secondary">Ungültiger oder fehlender Authentifizierungs-Token.</Typography>}
+            </div>
+          </div>
         <AddTaskDialog
             isVisible={addDialogIsVisbile}
             closeDialog={this.handleAddDialogClose}
             createNewTask={this.createNewTask}
         />
-        <FilterTaskDialog isVisible={filterDialogIsVisible} closeDialog={this.handleFilterDialogClose} />
+        <SettingsDialog isVisible={settingDialogIsVisible} closeDialog={this.handleSettingDialogClose} />
         </div>
     );
   }

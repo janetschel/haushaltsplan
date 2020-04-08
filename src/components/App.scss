@@ -19,63 +19,122 @@ div.App {
   }
 
   div.Overview {
-    div.Task {
-      display: grid;
-      grid-template-areas:
-              "chore toggleIcon editIcon"
-              "day day day"
-              "pic pic pic"
-              "blame blame blame";
+    div.taskWrapper {
+      overflow: scroll;
+      margin-top: 40px;
 
-      grid-template-columns: 250px 35px 35px;
-      transition: background-color 0.25s ease-in-out;
+      div.gridTask {
+        display: grid;
+        grid-template-areas:
+                "monday tuesday wednesday thursday friday saturday sunday";
+        grid-template-columns: repeat(7, 367px);
+        grid-template-rows: auto;
 
-      width: 325px;
-      border: 1px black solid;
-      border-radius: 5px;
-      margin: 5px;
-      margin-left: 10px;
-
-      svg.toggle {
-        grid-area: toggleIcon;
-        margin: 5px;
-
-        &:hover {
-          cursor: pointer;
+        div.monday {
+          padding: 20px;
+          border-left: 1px solid gray;
+          grid-area: monday;
         }
-      }
 
-      svg.editIcon {
-        grid-area: editIcon;
-        margin: 5px;
-
-        &:hover {
-          cursor: pointer;
+        div.tuesday {
+          padding: 20px;
+          border-left: 1px solid gray;
+          grid-area: tuesday;
         }
-      }
 
-      p.chore {
-        grid-area: chore;
-      }
+        div.wednesday {
+          padding: 20px;
+          border-left: 1px solid gray;
+          grid-area: wednesday;
+        }
 
-      p.day {
-        grid-area: day;
-      }
+        div.thursday {
+          padding: 20px;
+          border-left: 1px solid gray;
+          grid-area: thursday;
+        }
 
-      p.pic {
-        grid-area: pic;
-      }
+        div.friday {
+          padding: 20px;
+          border-left: 1px solid gray;
+          grid-area: friday;
+        }
 
-      span.blame {
-        grid-area: blame;
-      }
+        div.saturday {
+          padding: 20px;
+          border-left: 1px solid gray;
+          grid-area: saturday;
+        }
 
-      p {
-        margin: 5px;
-      }
+        div.sunday {
+          padding: 20px;
+          border-left: 1px solid gray;
+          grid-area: sunday;
+        }
 
-      span {
-        margin: 5px;
+        h6.columnHeading {
+          margin-left: 120px;
+          margin-bottom: 20px;
+        }
+
+        div.Task {
+          display: grid;
+          grid-template-areas:
+                  "chore toggleIcon editIcon"
+                  "day day day"
+                  "pic pic pic"
+                  "blame blame blame";
+
+          grid-template-columns: 250px 35px 35px;
+          transition: background-color 0.25s ease-in-out;
+
+          width: 325px;
+          border: 1px black solid;
+          border-radius: 5px;
+          margin-bottom: 10px;
+
+          svg.toggle {
+            grid-area: toggleIcon;
+            margin: 5px;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+
+          svg.editIcon {
+            grid-area: editIcon;
+            margin: 5px;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+
+          p.chore {
+            grid-area: chore;
+          }
+
+          p.day {
+            grid-area: day;
+          }
+
+          p.pic {
+            grid-area: pic;
+          }
+
+          span.blame {
+            grid-area: blame;
+          }
+
+          p {
+            margin: 5px;
+          }
+
+          span {
+            margin: 5px;
+          }
+        }
       }
     }
 
@@ -83,8 +142,6 @@ div.App {
       display: grid;
       grid-template-areas: "heading loggedInUser";
       grid-template-columns: 1fr 200px;
-
-      margin-left: 10px;
 
       h4.heading {
         margin-bottom: 20px;
@@ -104,10 +161,10 @@ div.App {
       }
     }
 
-    div.wrapper {
+    div.functionsWrapper {
       display: grid;
-      grid-template-areas: "add filter";
-      grid-template-columns: 1fr 1fr;
+      grid-template-areas: "add settings";
+      grid-template-columns: 1fr 90px;
 
       div.addWrapper {
         display: grid;
@@ -116,7 +173,6 @@ div.App {
 
         grid-area: add;
 
-        margin-left: 10px;
         margin-bottom: 20px;
         padding: 10px;
         border: 1px lightgray solid;
@@ -137,12 +193,12 @@ div.App {
         }
       }
 
-      div.filterWrapper {
+      div.settingWrapper {
         display: grid;
-        grid-template-areas: "filterIcon filterHeading";
-        grid-template-columns: 50px 1fr;
+        grid-template-areas: "settingIcon";
+        grid-template-columns: 50px;
 
-        grid-area: filter;
+        grid-area: settings;
 
         margin-left: 10px;
         margin-bottom: 20px;
@@ -151,12 +207,11 @@ div.App {
         border-radius: 5px;
         transition: background-color 0.25s ease-in;
 
-        svg.filterIcon {
-          grid-area: filterIcon;
-        }
+        justify-items: center;
 
-        p.headingFilter {
-          grid-area: filterHeading;
+        svg.settingsIcon {
+          grid-area: settingIcon;
+          margin-left: 5px;
         }
 
         &:hover {
