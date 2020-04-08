@@ -12,8 +12,8 @@ import SettingsIcon from '@material-ui/icons/Settings';
 class Overview extends React.Component<Props,
     { tasks: [{id: string, day: string, chore: string, pic: string, blame: string, done: boolean}],
       error: boolean, authtoken: string, username: string,
-      addDialogIsVisbile: boolean, settingDialogIsVisible: boolean,
-      weekdays: [string, string, string, string, string, string, string] }> {
+      addDialogIsVisbile: boolean, settingDialogIsVisible: boolean, initialFetchComplete: boolean,
+      weekdays: [string, string, string, string, string, string, string]}> {
 
   constructor({props}: { props: any }) {
     super(props);
@@ -26,6 +26,7 @@ class Overview extends React.Component<Props,
       username: '',
       addDialogIsVisbile: false,
       settingDialogIsVisible: false,
+      initialFetchComplete: false,
     };
 
     this.getTasks = this.getTasks.bind(this);
@@ -61,6 +62,7 @@ class Overview extends React.Component<Props,
     try {
       const tasks = await (await Api.getDocuments(authtoken)).json();
       await this.setState({ tasks: tasks });
+      await this.setState({ initialFetchComplete: true});
     } catch (error) {
       console.error(error);
       await this.setState({ error: true });
@@ -120,7 +122,16 @@ class Overview extends React.Component<Props,
     window.location.reload();
 
   render() {
-    const { tasks, error, authtoken, username, addDialogIsVisbile, settingDialogIsVisible, weekdays } = this.state;
+    const {
+      tasks,
+      error,
+      authtoken,
+      username, 
+      addDialogIsVisbile,
+      settingDialogIsVisible,
+      weekdays,
+      initialFetchComplete
+    } = this.state;
 
     return(
         <div className="Overview">
@@ -149,7 +160,7 @@ class Overview extends React.Component<Props,
               { weekdays.map(weekday =>
                   <div className={weekday} key={weekday}>
                     <Typography className="columnHeading" variant="h6">{Translator.translateDay(weekday)}</Typography>
-                    { !error && tasks.filter(currentTask => currentTask.day === weekday).map((currentTask, index) =>
+                    { initialFetchComplete && !error && tasks.filter(currentTask => currentTask.day === weekday).map((currentTask, index) =>
                         <Task
                             authtoken={authtoken}
                             key={index}
