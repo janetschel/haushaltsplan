@@ -26,6 +26,8 @@ div.App div.Overview div.taskWrapper div.gridTask {
   grid-template-rows: auto;
 }
 div.App div.Overview div.taskWrapper div.gridTask div.monday {
+  padding: 20px;
+  border-left: 1px solid gray;
   grid-area: monday;
 }
 div.App div.Overview div.taskWrapper div.gridTask div.tuesday {

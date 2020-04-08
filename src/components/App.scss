@@ -31,6 +31,8 @@ div.App {
         grid-template-rows: auto;
 
         div.monday {
+          padding: 20px;
+          border-left: 1px solid gray;
           grid-area: monday;
         }
 
