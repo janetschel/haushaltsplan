@@ -120,6 +120,7 @@ div.App div.Overview div.headingWrapper span.loggedInUser {
   height: 20px;
   color: gray;
   margin-top: 10px;
+  justify-self: right;
 }
 div.App div.Overview div.headingWrapper span.loggedInUser:hover {
   text-decoration: underline;
