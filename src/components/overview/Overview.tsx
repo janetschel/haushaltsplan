@@ -49,6 +49,13 @@ class Overview extends React.Component<Props,
   performInitialFetch = async () => {
     await this.setAuthToken();
     await this.getTasks();
+    this.scrollCurrentTasksOfDayIntoView();
+  };
+
+  scrollCurrentTasksOfDayIntoView = () => {
+    const currentDay = DayUtil.getDayOfWeekFromCorrespondingNumber((new Date()).getUTCDay())!;
+    const element = document.getElementById(currentDay)!;
+    element.scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
   };
 
   setAuthToken = async () => {
@@ -161,7 +168,7 @@ class Overview extends React.Component<Props,
           <div className="taskWrapper">
             <div className="gridTask">
               { weekdays.map(weekday =>
-                  <div className={weekday} key={weekday}>
+                  <div className={weekday} key={weekday} id={weekday}>
                     <Typography className="columnHeading" variant="h6">{this.translateDay(weekday)}</Typography>
                     { initialFetchComplete && !error && tasks.filter(currentTask => currentTask.day === weekday).map((currentTask, index) =>
                         <Task

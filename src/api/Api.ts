@@ -67,8 +67,8 @@ const getAuthToken = async (base64String: string) => {
   });
 };
 
-const healthCheck = async (authtoken: string) =>
-    await request('/healthcheck', RequestMethods.GET, authtoken);
+const healthCheck = async () =>
+    await request('/healthcheck', RequestMethods.GET, "");
 
 const getDocuments = async (authtoken: string) =>
   await request('/getDocuments', RequestMethods.GET, authtoken);
