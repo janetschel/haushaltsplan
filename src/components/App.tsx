@@ -32,13 +32,14 @@ class App extends React.Component<{}, { tasks: [], userIsLoggedIn: boolean, auth
 
     if (!validInformation) {
       await this.setState({ userIsLoggedIn: false });
-      return;
+      return false;
     }
 
     const authtoken = await(await Api.getAuthToken(base64String)).text();
     await this.setState({ username: username });
     await this.setState({ authtoken: authtoken });
     await this.setState({ userIsLoggedIn: true });
+    return true;
   };
 
   render() {

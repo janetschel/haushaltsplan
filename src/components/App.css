@@ -13,7 +13,7 @@ div.App div.LoginPrompt div.username, div.App div.LoginPrompt div.password {
   margin: 20px 10px 0 0;
 }
 div.App div.LoginPrompt button.loginButton {
-  margin-top: 20px;
+  margin: 20px 0;
 }
 div.App div.Overview div.taskWrapper {
   overflow: scroll;
