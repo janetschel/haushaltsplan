@@ -1,24 +1,29 @@
 import React from 'react';
-import { Typography } from '@material-ui/core'
+import {Typography} from '@material-ui/core'
 import Translator from "../utils/Translator";
 import ListIcon from '@material-ui/icons/List';
 import ToggleOffOutlinedIcon from '@material-ui/icons/ToggleOffOutlined';
 import ToggleOnIcon from '@material-ui/icons/ToggleOn';
 import Api from "../../api/Api";
 import EditDialog from "../edit/EditDialog";
+import FeedbackDialog from "../feedback/FeedbackDialog";
+import MoodIcon from '@material-ui/icons/Mood';
+import Feedback from "../enums/Feedback";
 
-class Task extends React.Component<Props, { isVisible: boolean }> {
+class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible: boolean }> {
   constructor({props}: { props: any }) {
     super(props);
 
     this.state = {
       isVisible: false,
+      feedbackVisible: false,
     };
 
     this.handleClose = this.handleClose.bind(this);
     this.updateTasks = this.updateTasks.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
     this.updateTaskComplete = this.updateTaskComplete.bind(this);
+    this.handleFeedbackClose = this.handleFeedbackClose.bind(this);
   }
 
   translateDayToGerman = (dayToTranslate: string) => Translator.translateDay(dayToTranslate);
@@ -41,13 +46,15 @@ class Task extends React.Component<Props, { isVisible: boolean }> {
   };
 
   updateTaskComplete = async (day: string, pic: string) => {
-    const { currentTask, authtoken, username } = this.props;
+    const { currentTask, authtoken, username, getTasks } = this.props;
 
     currentTask.day = day;
     currentTask.pic = pic;
     currentTask.blame = username.startsWith('jan') ? 'Jan' : 'Lea';
+    currentTask.feedback = Feedback.NO_FEEDBACK_GIVEN;
 
     await Api.updateDocument(currentTask, authtoken);
+    await getTasks();
   };
 
   updateTasks = async () => {
@@ -55,14 +62,23 @@ class Task extends React.Component<Props, { isVisible: boolean }> {
     await getTasks();
   };
 
+  userIsNotPic = () =>
+    !this.props.username.toLowerCase().startsWith(this.props.currentTask.pic.toLowerCase());
+
   handleOpen = async () =>
     await this.setState({ isVisible: true });
 
   handleClose = async () =>
     await this.setState({ isVisible: false });
 
+  handleFeedbackOpen = async () =>
+      await this.setState({ feedbackVisible: true });
+
+  handleFeedbackClose = async () =>
+      await this.setState({ feedbackVisible: false });
+
   render() {
-    const { isVisible } = this.state;
+    const { isVisible, feedbackVisible } = this.state;
     const { currentTask, createNewTaskFromOldTask, username } = this.props;
 
     const taskDone = currentTask.done ? 'Erledigt' : 'Zu erledigen';
@@ -76,6 +92,7 @@ class Task extends React.Component<Props, { isVisible: boolean }> {
               <ToggleOffOutlinedIcon className="toggle" onClick={this.toggleDoneOfTask} />
           }
           <ListIcon className="editIcon" onClick={this.handleOpen}/>
+          { currentTask.done && this.userIsNotPic() && <MoodIcon className="feedbackIcon" onClick={this.handleFeedbackOpen} /> }
           <Typography className="day" variant="body2">{this.translateDayToGerman(currentTask.day)}</Typography>
           <Typography className="pic" variant="body2">{taskDone} von: {currentTask.pic}</Typography>
           <Typography className="blame" variant="caption">Eingetragen von: {currentTask.blame}</Typography>
@@ -89,13 +106,20 @@ class Task extends React.Component<Props, { isVisible: boolean }> {
               createNewTaskFromOldTask={createNewTaskFromOldTask}
               username={username}
           />
+          <FeedbackDialog
+              feedbackVisible={feedbackVisible}
+              closeFeedbackDialog={this.handleFeedbackClose}
+              currentTask={currentTask}
+              updateTask={this.updateTasks}
+              username={username}
+          />
         </div>
     );
   }
 }
 
 type Props = {
-  currentTask: { id: string, day:string, chore: string, pic: string, blame: string, done: boolean },
+  currentTask: { id: string, day:string, chore: string, pic: string, blame: string, done: boolean, feedback: Feedback },
   createNewTaskFromOldTask:
       (oldId: string, day: string, chore: string, pic: string, blame: string, done: boolean) => void,
   authtoken: string,

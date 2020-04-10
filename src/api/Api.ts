@@ -1,5 +1,6 @@
 import Config from "../config";
 import RequestMethods from "./RequestMethods";
+import Feedback from "../components/enums/Feedback";
 
 const backendUrl = Config.getBackendUrl();
 
@@ -79,6 +80,9 @@ const addDocument = async (document: {}, authtoken: string) =>
 const updateDocument = async (document: {}, authtoken: string) =>
     await requestWithBody('/updateDocument', RequestMethods.PUT, document, authtoken);
 
+const addFeedbackToDocument = async (id:String, feedback: Feedback, authtoken: string) =>
+    await request(`/updateDocument/addFeedback/${id}?feedback=${feedback}`, RequestMethods.PUT , authtoken);
+
 const deleteDocument = async (id: string, authtoken: string) =>
     await request(`/deleteDocument?id=${id}`, RequestMethods.DELETE, authtoken);
 
@@ -90,6 +94,7 @@ const Api = {
   addDocument,
   updateDocument,
   deleteDocument,
+  addFeedbackToDocument,
 };
 
 export default Api;

@@ -66,8 +66,8 @@ div.App div.Overview div.taskWrapper div.gridTask h6.columnHeading {
 }
 div.App div.Overview div.taskWrapper div.gridTask div.Task {
   display: grid;
-  grid-template-areas: "chore toggleIcon editIcon" "day day day" "pic pic pic" "blame blame blame";
-  grid-template-columns: 250px 35px 35px;
+  grid-template-areas: "chore feedbackIcon toggleIcon editIcon" "day day day day" "pic pic pic pic" "blame blame blame blame";
+  grid-template-columns: 215px 35px 35px 35px;
   transition: background-color 0.25s ease-in-out;
   width: 325px;
   border: 1px black solid;
@@ -86,6 +86,13 @@ div.App div.Overview div.taskWrapper div.gridTask div.Task svg.editIcon {
   margin: 5px;
 }
 div.App div.Overview div.taskWrapper div.gridTask div.Task svg.editIcon:hover {
+  cursor: pointer;
+}
+div.App div.Overview div.taskWrapper div.gridTask div.Task svg.feedbackIcon {
+  grid-area: feedbackIcon;
+  margin: 5px;
+}
+div.App div.Overview div.taskWrapper div.gridTask div.Task svg.feedbackIcon:hover {
   cursor: pointer;
 }
 div.App div.Overview div.taskWrapper div.gridTask div.Task p.chore {

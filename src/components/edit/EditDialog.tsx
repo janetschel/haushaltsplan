@@ -3,6 +3,7 @@ import {Dialog, DialogTitle, DialogContent, Typography } from '@material-ui/core
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import EditDialogDetails from "./EditDialogDetails";
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
+import Feedback from "../enums/Feedback";
 
 class EditDialog extends React.Component<Props, {}> {
   handleClose = () => {
@@ -59,7 +60,7 @@ class EditDialog extends React.Component<Props, {}> {
 }
 
 type Props = {
-  currentTask: { id: string, day:string, chore: string, pic: string, blame: string, done: boolean },
+  currentTask: { id: string, day:string, chore: string, pic: string, blame: string, done: boolean, feedback: Feedback },
   createNewTaskFromOldTask:
       (oldId: string, day: string, chore: string, pic: string, blame: string, done: boolean) => void,
   updateTaskComplete: (day: string, pic: string) => void,

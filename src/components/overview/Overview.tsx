@@ -8,9 +8,10 @@ import AddTaskDialog from "./AddTaskDialog";
 import SettingsDialog from "./SettingsDialog";
 import Translator from "../utils/Translator";
 import SettingsIcon from '@material-ui/icons/Settings';
+import Feedback from "../enums/Feedback";
 
 class Overview extends React.Component<Props,
-    { tasks: [{id: string, day: string, chore: string, pic: string, blame: string, done: boolean}],
+    { tasks: [{id: string, day: string, chore: string, pic: string, blame: string, done: boolean, feedback: Feedback }],
       error: boolean, authtoken: string, username: string,
       addDialogIsVisbile: boolean, settingDialogIsVisible: boolean, initialFetchComplete: boolean,
       weekdays: [string, string, string, string, string, string, string]}> {
@@ -20,7 +21,7 @@ class Overview extends React.Component<Props,
 
     this.state = {
       weekdays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
-      tasks: [{id: "1", day: "monday", chore: "Kochen", pic: "Jan", blame: "Jan", done: false}],
+      tasks: [{id: "1", day: "monday", chore: "Kochen", pic: "Jan", blame: "Jan", done: false, feedback: Feedback.NO_FEEDBACK_GIVEN}],
       error: false,
       authtoken: '',
       username: '',
