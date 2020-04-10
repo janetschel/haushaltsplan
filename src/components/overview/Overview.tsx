@@ -55,7 +55,7 @@ class Overview extends React.Component<Props,
   scrollCurrentTasksOfDayIntoView = () => {
     const currentDay = DayUtil.getDayOfWeekFromCorrespondingNumber((new Date()).getUTCDay())!;
     const element = document.getElementById(currentDay)!;
-    element.scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
+    element.scrollIntoView({behavior: "smooth", block: "end", inline: "center"});
   };
 
   setAuthToken = async () => {
