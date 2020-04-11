@@ -1,7 +1,6 @@
 import React from 'react';
 import {Button, TextField, Typography, CircularProgress } from '@material-ui/core';
 
-
 class LoginPrompt extends React.Component<Props, { loggingIn: boolean, falseCredentials: boolean }> {
   constructor({props}: { props: any }) {
     super(props);

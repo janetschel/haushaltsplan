@@ -66,8 +66,8 @@ div.App div.Overview div.taskWrapper div.gridTask h6.columnHeading {
 }
 div.App div.Overview div.taskWrapper div.gridTask div.Task {
   display: grid;
-  grid-template-areas: "chore toggleIcon editIcon" "day day day" "pic pic pic" "blame blame blame";
-  grid-template-columns: 250px 35px 35px;
+  grid-template-areas: "chore feedbackIcon toggleIcon editIcon" "day day day day" "pic pic pic pic" "blame blame blame blame";
+  grid-template-columns: 215px 35px 35px 35px;
   transition: background-color 0.25s ease-in-out;
   width: 325px;
   border: 1px black solid;
@@ -86,6 +86,13 @@ div.App div.Overview div.taskWrapper div.gridTask div.Task svg.editIcon {
   margin: 5px;
 }
 div.App div.Overview div.taskWrapper div.gridTask div.Task svg.editIcon:hover {
+  cursor: pointer;
+}
+div.App div.Overview div.taskWrapper div.gridTask div.Task svg.feedbackIcon {
+  grid-area: feedbackIcon;
+  margin: 5px;
+}
+div.App div.Overview div.taskWrapper div.gridTask div.Task svg.feedbackIcon:hover {
   cursor: pointer;
 }
 div.App div.Overview div.taskWrapper div.gridTask div.Task p.chore {
@@ -172,6 +179,39 @@ div.App div.Overview div.functionsWrapper div.settingWrapper svg.settingsIcon {
 div.App div.Overview div.functionsWrapper div.settingWrapper:hover {
   cursor: pointer;
   background-color: rgba(211, 211, 211, 0.3);
+}
+
+div.feedbackWrapper {
+  display: grid;
+  grid-template-areas: "good okay bad";
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  margin-bottom: 20px;
+}
+div.feedbackWrapper svg {
+  width: 35px;
+  height: 35px;
+}
+div.feedbackWrapper svg:hover {
+  cursor: pointer;
+}
+div.feedbackWrapper svg.good {
+  grid-area: good;
+}
+div.feedbackWrapper svg.good:hover {
+  color: rgba(107, 179, 127, 0.7);
+}
+div.feedbackWrapper svg.okay {
+  grid-area: okay;
+}
+div.feedbackWrapper svg.okay:hover {
+  color: #909090;
+}
+div.feedbackWrapper svg.bad {
+  grid-area: bad;
+}
+div.feedbackWrapper svg.bad:hover {
+  color: rgba(213, 80, 82, 0.7);
 }
 
 div.dialogContentAdd {

@@ -80,12 +80,12 @@ div.App {
         div.Task {
           display: grid;
           grid-template-areas:
-                  "chore toggleIcon editIcon"
-                  "day day day"
-                  "pic pic pic"
-                  "blame blame blame";
+                  "chore feedbackIcon toggleIcon editIcon"
+                  "day day day day"
+                  "pic pic pic pic"
+                  "blame blame blame blame";
 
-          grid-template-columns: 250px 35px 35px;
+          grid-template-columns: 215px 35px 35px 35px;
           transition: background-color 0.25s ease-in-out;
 
           width: 325px;
@@ -104,6 +104,15 @@ div.App {
 
           svg.editIcon {
             grid-area: editIcon;
+            margin: 5px;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+
+          svg.feedbackIcon {
+            grid-area: feedbackIcon;
             margin: 5px;
 
             &:hover {
@@ -220,6 +229,48 @@ div.App {
           background-color: rgba(211, 211, 211, 0.3);
         }
       }
+    }
+  }
+}
+
+div.feedbackWrapper {
+  display: grid;
+  grid-template-areas: "good okay bad";
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+
+  margin-bottom: 20px;
+
+  svg {
+    width: 35px;
+    height: 35px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  svg.good {
+    grid-area: good;
+
+    &:hover {
+      color: rgba(107, 179, 127, 0.7);
+    }
+  }
+
+  svg.okay {
+    grid-area: okay;
+
+    &:hover {
+      color: #909090;
+    }
+  }
+
+  svg.bad {
+    grid-area: bad;
+
+    &:hover {
+      color: rgba(213, 80, 82, 0.7);
     }
   }
 }
