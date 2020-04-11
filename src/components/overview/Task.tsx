@@ -1,5 +1,5 @@
 import React from 'react';
-import {Typography} from '@material-ui/core'
+import {Snackbar, Typography} from '@material-ui/core'
 import Translator from "../utils/Translator";
 import ListIcon from '@material-ui/icons/List';
 import ToggleOffOutlinedIcon from '@material-ui/icons/ToggleOffOutlined';
@@ -7,23 +7,31 @@ import ToggleOnIcon from '@material-ui/icons/ToggleOn';
 import Api from "../../api/Api";
 import EditDialog from "../edit/EditDialog";
 import FeedbackDialog from "../feedback/FeedbackDialog";
-import MoodIcon from '@material-ui/icons/Mood';
 import Feedback from "../enums/Feedback";
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import FeedbackIcon from "../feedback/FeedbackIcon";
 
-class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible: boolean }> {
+class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible: boolean, snackbarVisible: boolean,
+  snackbarMessage: string }> {
   constructor({props}: { props: any }) {
     super(props);
 
     this.state = {
       isVisible: false,
       feedbackVisible: false,
+      snackbarVisible: false,
+      snackbarMessage: 'Feedback erfolgreich hinzugefügt',
     };
 
     this.handleClose = this.handleClose.bind(this);
     this.updateTasks = this.updateTasks.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
     this.updateTaskComplete = this.updateTaskComplete.bind(this);
+    this.handleFeedbackOpen = this.handleFeedbackOpen.bind(this);
     this.handleFeedbackClose = this.handleFeedbackClose.bind(this);
+    this.addFeedbackToTask = this.addFeedbackToTask.bind(this);
+    this.userIsNotPic = this.userIsNotPic.bind(this);
   }
 
   translateDayToGerman = (dayToTranslate: string) => Translator.translateDay(dayToTranslate);
@@ -62,6 +70,14 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
     await getTasks();
   };
 
+  addFeedbackToTask = async (feedback: Feedback) => {
+    const { currentTask, authtoken } = this.props;
+
+    await Api.addFeedbackToDocument(currentTask.id, feedback, authtoken);
+    await this.setState({ snackbarMessage: 'Feedback erfolgreich hinzugefügt' });
+    await this.setState({ snackbarVisible: true });
+  }
+
   userIsNotPic = () =>
     !this.props.username.toLowerCase().startsWith(this.props.currentTask.pic.toLowerCase());
 
@@ -71,14 +87,25 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
   handleClose = async () =>
     await this.setState({ isVisible: false });
 
-  handleFeedbackOpen = async () =>
-      await this.setState({ feedbackVisible: true });
+  handleFeedbackOpen = async () => {
+    if (!this.userIsNotPic()) {
+      await this.setState({ snackbarMessage:
+            'Feedback kann nur von Personen hinzugefügt werden, welche nicht für die Aufgabe verantwortlich sind' });
+      await this.setState({ snackbarVisible: true });
+      return;
+    }
+
+    await this.setState({ feedbackVisible: true });
+  }
 
   handleFeedbackClose = async () =>
       await this.setState({ feedbackVisible: false });
 
+  handleSnackbarClose = async () =>
+      await this.setState({ snackbarVisible: false });
+
   render() {
-    const { isVisible, feedbackVisible } = this.state;
+    const { isVisible, feedbackVisible, snackbarVisible, snackbarMessage } = this.state;
     const { currentTask, createNewTaskFromOldTask, username } = this.props;
 
     const taskDone = currentTask.done ? 'Erledigt' : 'Zu erledigen';
@@ -91,8 +118,11 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
               <ToggleOnIcon className="toggle" onClick={this.toggleDoneOfTask} /> :
               <ToggleOffOutlinedIcon className="toggle" onClick={this.toggleDoneOfTask} />
           }
+
           <ListIcon className="editIcon" onClick={this.handleOpen}/>
-          { currentTask.done && this.userIsNotPic() && <MoodIcon className="feedbackIcon" onClick={this.handleFeedbackOpen} /> }
+
+          <FeedbackIcon userIsNotPic={this.userIsNotPic} currentTask={currentTask} handleFeedbackOpen={this.handleFeedbackOpen} />
+
           <Typography className="day" variant="body2">{this.translateDayToGerman(currentTask.day)}</Typography>
           <Typography className="pic" variant="body2">{taskDone} von: {currentTask.pic}</Typography>
           <Typography className="blame" variant="caption">Eingetragen von: {currentTask.blame}</Typography>
@@ -112,6 +142,21 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
               currentTask={currentTask}
               updateTask={this.updateTasks}
               username={username}
+              addFeedbackToTask={this.addFeedbackToTask}
+          />
+          <Snackbar
+              anchorOrigin={{vertical: 'bottom', horizontal: 'left', }}
+              open={snackbarVisible}
+              autoHideDuration={3000}
+              message={snackbarMessage}
+              onClose={this.handleSnackbarClose}
+              action={
+                <React.Fragment>
+                  <IconButton size="small" aria-label="close" color="inherit" onClick={this.handleSnackbarClose}>
+                    <CloseIcon fontSize="small" color="secondary" />
+                  </IconButton>
+                </React.Fragment>
+              }
           />
         </div>
     );

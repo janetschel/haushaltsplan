@@ -233,6 +233,48 @@ div.App {
   }
 }
 
+div.feedbackWrapper {
+  display: grid;
+  grid-template-areas: "good okay bad";
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+
+  margin-bottom: 20px;
+
+  svg {
+    width: 35px;
+    height: 35px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  svg.good {
+    grid-area: good;
+
+    &:hover {
+      color: rgba(107, 179, 127, 0.7);
+    }
+  }
+
+  svg.okay {
+    grid-area: okay;
+
+    &:hover {
+      color: #909090;
+    }
+  }
+
+  svg.bad {
+    grid-area: bad;
+
+    &:hover {
+      color: rgba(213, 80, 82, 0.7);
+    }
+  }
+}
+
 div.dialogContentAdd {
   width: 500px;
 
