@@ -5,7 +5,16 @@ import EditDialogDetails from "./EditDialogDetails";
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 import Feedback from "../enums/Feedback";
 
-class EditDialog extends React.Component<Props, {}> {
+class EditDialog extends React.Component<Props, { deleteTaskDisabled: boolean, moveTaskDisabled: boolean }> {
+  constructor({props}: { props: any }) {
+    super(props);
+
+    this.state = {
+      deleteTaskDisabled: false,
+      moveTaskDisabled: false,
+    }
+  }
+
   handleClose = () => {
     const { closeDialog, updateTask } = this.props;
     updateTask();
@@ -13,13 +22,30 @@ class EditDialog extends React.Component<Props, {}> {
   };
 
   deleteTask = async () => {
+    const { deleteTaskDisabled, moveTaskDisabled } = this.state;
     const { deleteTask } = this.props;
+
+    if (deleteTaskDisabled || moveTaskDisabled) {
+      return;
+    }
+
+    await this.setState({ deleteTaskDisabled: true });
+    await this.setState({ moveTaskDisabled: true });
+
     await deleteTask();
     this.handleClose();
   };
 
   moveTask = async () => {
+    const { deleteTaskDisabled, moveTaskDisabled } = this.state;
     const { currentTask, username, createNewTaskFromOldTask } = this.props;
+
+    if (deleteTaskDisabled || moveTaskDisabled) {
+      return;
+    }
+
+    await this.setState({ deleteTaskDisabled: true });
+    await this.setState({ moveTaskDisabled: true });
 
     const { day, chore, pic} = currentTask;
     const blame = username.startsWith('jan') ? 'Jan' : 'Lea';
@@ -40,7 +66,7 @@ class EditDialog extends React.Component<Props, {}> {
                 <DeleteOutlineOutlinedIcon color="secondary" className="deleteIcon" />
                 <Typography className="deleteText">Aufgabe löschen</Typography>
               </div>
-              <div className="moveTask" onClick={this.moveTask}>
+              <div className="moveTask" onClick={this.moveTask} >
                 <ArrowForwardIosOutlinedIcon className="moveIcon" />
                 <Typography className="moveText">Aufgabe in zwei Tagen erneut einstellen</Typography>
               </div>

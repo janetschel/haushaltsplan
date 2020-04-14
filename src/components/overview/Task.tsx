@@ -13,14 +13,20 @@ import CloseIcon from '@material-ui/icons/Close';
 import FeedbackIcon from "../feedback/FeedbackIcon";
 
 class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible: boolean, snackbarVisible: boolean,
-  snackbarMessage: string }> {
+  snackbarMessage: string, updateDoneOfTaskDisabled: boolean }> {
+
+  private editDialogKey: number;
+
   constructor({props}: { props: any }) {
     super(props);
+
+    this.editDialogKey = 0;
 
     this.state = {
       isVisible: false,
       feedbackVisible: false,
       snackbarVisible: false,
+      updateDoneOfTaskDisabled: false,
       snackbarMessage: 'Feedback erfolgreich hinzugefügt',
     };
 
@@ -37,7 +43,14 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
   translateDayToGerman = (dayToTranslate: string) => Translator.translateDay(dayToTranslate);
 
   toggleDoneOfTask = async () => {
+    const { updateDoneOfTaskDisabled } = this.state;
     const { currentTask, authtoken } = this.props;
+
+    if (updateDoneOfTaskDisabled) {
+      return;
+    }
+
+    await this.setState({ updateDoneOfTaskDisabled: true });
 
     currentTask.done = !currentTask.done;
     await Api.updateDocument(currentTask, authtoken)
@@ -68,6 +81,7 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
   updateTasks = async () => {
     const { getTasks } = this.props;
     await getTasks();
+    await this.setState({ updateDoneOfTaskDisabled: false });
   };
 
   addFeedbackToTask = async (feedback: Feedback) => {
@@ -111,6 +125,8 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
     const taskDone = currentTask.done ? 'Erledigt' : 'Zu erledigen';
     const colorToDisplay = currentTask.done ? 'rgba(120, 222, 142, 0.3)' : 'rgba(213, 80, 82, 0.2)';
 
+    this.editDialogKey++;
+
     return (
         <div className="Task" style={{ backgroundColor: colorToDisplay }}>
           <Typography className="chore" variant="body1">{currentTask.chore}</Typography>
@@ -135,6 +151,7 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
               updateTaskComplete={this.updateTaskComplete}
               createNewTaskFromOldTask={createNewTaskFromOldTask}
               username={username}
+              key={this.editDialogKey}
           />
           <FeedbackDialog
               feedbackVisible={feedbackVisible}
