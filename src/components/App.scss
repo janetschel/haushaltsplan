@@ -22,6 +22,7 @@ div.App {
     div.taskWrapper {
       overflow: scroll;
       margin-top: 40px;
+      height: 100vh;
 
       div.gridTask {
         display: grid;
@@ -31,45 +32,52 @@ div.App {
         grid-template-rows: auto;
 
         div.monday {
+          grid-area: monday;
+          height: 100vh;
           padding: 20px;
           border-left: 1px solid gray;
-          grid-area: monday;
         }
 
         div.tuesday {
+          grid-area: tuesday;
+          height: 100vh;
           padding: 20px;
           border-left: 1px solid gray;
-          grid-area: tuesday;
         }
 
         div.wednesday {
+          grid-area: wednesday;
+          height: 100vh;
           padding: 20px;
           border-left: 1px solid gray;
-          grid-area: wednesday;
         }
 
         div.thursday {
+          grid-area: thursday;
+          height: 100vh;
           padding: 20px;
           border-left: 1px solid gray;
-          grid-area: thursday;
         }
 
         div.friday {
+          grid-area: friday;
+          height: 100vh;
           padding: 20px;
           border-left: 1px solid gray;
-          grid-area: friday;
         }
 
         div.saturday {
+          grid-area: saturday;
+          height: 100vh;
           padding: 20px;
           border-left: 1px solid gray;
-          grid-area: saturday;
         }
 
         div.sunday {
+          grid-area: sunday;
+          height: 100vh;
           padding: 20px;
           border-left: 1px solid gray;
-          grid-area: sunday;
         }
 
         h6.columnHeading {
@@ -87,6 +95,11 @@ div.App {
 
           grid-template-columns: 215px 35px 35px 35px;
           transition: background-color 0.25s ease-in-out;
+
+          user-select: none;
+          -webkit-user-select: none;
+
+          position: static;
 
           width: 325px;
           border: 1px black solid;
@@ -142,6 +155,10 @@ div.App {
 
           span {
             margin: 5px;
+          }
+
+          &:hover {
+            cursor: pointer;
           }
         }
       }

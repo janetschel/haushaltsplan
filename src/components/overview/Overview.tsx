@@ -185,6 +185,7 @@ class Overview extends React.Component<Props,
                             getTasks={this.getTasks}
                             username={username}
                             createNewTaskFromOldTask={this.createNewTaskFromOldTask}
+                            weekdays={weekdays}
                         />
                     )}
                   </div>
