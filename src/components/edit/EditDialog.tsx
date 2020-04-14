@@ -21,11 +21,6 @@ class EditDialog extends React.Component<Props, { deleteTaskDisabled: boolean, m
     closeDialog();
   };
 
-  componentDidMount(): void {
-    this.setState({ deleteTaskDisabled: false });
-    this.setState({ moveTaskDisabled: false });
-  }
-
   deleteTask = async () => {
     const { deleteTaskDisabled, moveTaskDisabled } = this.state;
     const { deleteTask } = this.props;
@@ -37,7 +32,7 @@ class EditDialog extends React.Component<Props, { deleteTaskDisabled: boolean, m
     await this.setState({ deleteTaskDisabled: true });
     await this.setState({ moveTaskDisabled: true });
 
-    deleteTask();
+    await deleteTask();
     this.handleClose();
   };
 
@@ -55,7 +50,7 @@ class EditDialog extends React.Component<Props, { deleteTaskDisabled: boolean, m
     const { day, chore, pic} = currentTask;
     const blame = username.startsWith('jan') ? 'Jan' : 'Lea';
 
-    createNewTaskFromOldTask(currentTask.id, day, chore, pic, blame, currentTask.done);
+    await createNewTaskFromOldTask(currentTask.id, day, chore, pic, blame, currentTask.done);
     this.handleClose();
   };
 
