@@ -16,11 +16,13 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
   snackbarMessage: string, updateDoneOfTaskDisabled: boolean }> {
 
   private editDialogKey: number;
+  private _isMounted: boolean;
 
   constructor({props}: { props: any }) {
     super(props);
 
     this.editDialogKey = 0;
+    this._isMounted = false;
 
     this.state = {
       isVisible: false,
@@ -38,6 +40,14 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
     this.handleFeedbackClose = this.handleFeedbackClose.bind(this);
     this.addFeedbackToTask = this.addFeedbackToTask.bind(this);
     this.userIsNotPic = this.userIsNotPic.bind(this);
+  }
+
+  componentDidMount(): void {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount(): void {
+    this._isMounted = false;
   }
 
   translateDayToGerman = (dayToTranslate: string) => Translator.translateDay(dayToTranslate);
@@ -81,7 +91,7 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
   updateTasks = async () => {
     const { getTasks } = this.props;
     await getTasks();
-    await this.setState({ updateDoneOfTaskDisabled: false });
+    this._isMounted && await this.setState({ updateDoneOfTaskDisabled: false });
   };
 
   addFeedbackToTask = async (feedback: Feedback) => {
