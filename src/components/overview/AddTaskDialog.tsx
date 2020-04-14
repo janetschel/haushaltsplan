@@ -13,7 +13,7 @@ import Translator from "../utils/Translator";
 
 class AddTaskDialog extends React.Component<Props, {
   weekdays: [string, string, string, string, string, string, string],
-  currentWeekday: string, pics: [string, string], currentPic: string, }> {
+  currentWeekday: string, pics: [string, string], currentPic: string, inputDisabled: boolean, showMessage: boolean, }>{
 
   constructor({props}: { props: any }) {
     super(props);
@@ -23,6 +23,8 @@ class AddTaskDialog extends React.Component<Props, {
       currentWeekday: 'monday',
       pics: ['Jan', 'Lea'],
       currentPic: 'Jan',
+      inputDisabled: false,
+      showMessage: false,
     }
   }
 
@@ -31,19 +33,30 @@ class AddTaskDialog extends React.Component<Props, {
 
   handleClose = async () => {
     const { closeDialog } = this.props;
-
-    await this.setState({ currentWeekday: 'monday' });
-    await this.setState({ currentPic: 'Jan' });
-
     closeDialog();
   };
 
   saveChanges = async () => {
-    const { currentWeekday, currentPic } = this.state;
+    const { currentWeekday, currentPic, inputDisabled } = this.state;
     const { createNewTask } = this.props;
+
+    if (inputDisabled) {
+      return;
+    }
+
+    await this.setState({ inputDisabled: true });
+
     const chore = (document.getElementById('choreContent')! as HTMLInputElement).value;
 
+    if (chore.length <= 0) {
+      await this.setState({ showMessage: true });
+      await this.setState({ inputDisabled: false });
+      return;
+    }
+
+    await this.setState({ showMessage: false });
     await createNewTask(chore, currentWeekday, currentPic);
+
     this.handleClose();
   };
 
@@ -54,7 +67,7 @@ class AddTaskDialog extends React.Component<Props, {
       await this.setState({ currentPic: e.target.value });
 
   render() {
-    const { weekdays, pics } = this.state;
+    const { weekdays, pics, showMessage } = this.state;
     const { isVisible } = this.props;
 
     return(
@@ -86,6 +99,7 @@ class AddTaskDialog extends React.Component<Props, {
               </FormControl>
               <Button onClick={this.handleClose} variant="outlined" className="abortButton" color="secondary">Abbrechen</Button>
               <Button onClick={this.saveChanges} variant="outlined" className="saveButton">Aufgabe erstellen</Button>
+              { showMessage && <Typography className="warning" color="secondary">Das Feld "Aufgabe" darf nicht leer sein!</Typography> }
             </div>
           </DialogContent>
         </Dialog>

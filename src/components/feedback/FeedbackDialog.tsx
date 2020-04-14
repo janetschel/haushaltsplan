@@ -5,7 +5,15 @@ import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import Feedback from "../enums/Feedback";
 
-class FeedbackDialog extends React.Component<Props, {}> {
+class FeedbackDialog extends React.Component<Props, { inputDisabled: boolean }> {
+  constructor({props}: { props: any }) {
+    super(props);
+
+    this.state = {
+      inputDisabled: false,
+    }
+  }
+
   handleClose = () => {
     const { closeFeedbackDialog, updateTask } = this.props;
     updateTask();
@@ -13,9 +21,18 @@ class FeedbackDialog extends React.Component<Props, {}> {
   };
 
   handleFeedbackGiven = async (feedbackGiven: Feedback) => {
+    const { inputDisabled } = this.state;
     const { addFeedbackToTask } = this.props;
 
+    if (inputDisabled) {
+      return;
+    }
+
+    await this.setState({ inputDisabled: true });
+
     await addFeedbackToTask(feedbackGiven);
+    await this.setState({ inputDisabled: false });
+
     this.handleClose();
   }
 
