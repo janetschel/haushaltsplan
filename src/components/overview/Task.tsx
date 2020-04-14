@@ -14,8 +14,13 @@ import FeedbackIcon from "../feedback/FeedbackIcon";
 
 class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible: boolean, snackbarVisible: boolean,
   snackbarMessage: string }> {
+
+  private editDialogKey: number;
+
   constructor({props}: { props: any }) {
     super(props);
+
+    this.editDialogKey = 0;
 
     this.state = {
       isVisible: false,
@@ -67,6 +72,7 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
 
   updateTasks = async () => {
     const { getTasks } = this.props;
+    console.log("updateTasks")
     await getTasks();
   };
 
@@ -111,6 +117,8 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
     const taskDone = currentTask.done ? 'Erledigt' : 'Zu erledigen';
     const colorToDisplay = currentTask.done ? 'rgba(120, 222, 142, 0.3)' : 'rgba(213, 80, 82, 0.2)';
 
+    this.editDialogKey++;
+
     return (
         <div className="Task" style={{ backgroundColor: colorToDisplay }}>
           <Typography className="chore" variant="body1">{currentTask.chore}</Typography>
@@ -135,6 +143,7 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
               updateTaskComplete={this.updateTaskComplete}
               createNewTaskFromOldTask={createNewTaskFromOldTask}
               username={username}
+              key={this.editDialogKey}
           />
           <FeedbackDialog
               feedbackVisible={feedbackVisible}
