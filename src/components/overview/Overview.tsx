@@ -16,8 +16,12 @@ class Overview extends React.Component<Props,
       addDialogIsVisbile: boolean, settingDialogIsVisible: boolean, initialFetchComplete: boolean,
       weekdays: [string, string, string, string, string, string, string]}> {
 
+  private addTaskDialogKey: number;
+
   constructor({props}: { props: any }) {
     super(props);
+
+    this.addTaskDialogKey = 0;
 
     this.state = {
       weekdays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
@@ -144,6 +148,8 @@ class Overview extends React.Component<Props,
       initialFetchComplete
     } = this.state;
 
+    this.addTaskDialogKey++;
+
     return(
         <div className="Overview">
           <div className="headingWrapper" >
@@ -190,6 +196,7 @@ class Overview extends React.Component<Props,
             isVisible={addDialogIsVisbile}
             closeDialog={this.handleAddDialogClose}
             createNewTask={this.createNewTask}
+            key={this.addTaskDialogKey}
         />
         <SettingsDialog isVisible={settingDialogIsVisible} closeDialog={this.handleSettingDialogClose} />
         </div>
