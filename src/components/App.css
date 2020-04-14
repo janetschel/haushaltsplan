@@ -219,11 +219,15 @@ div.dialogContentAdd {
 }
 div.dialogContentAdd div.contentWrapper {
   display: grid;
-  grid-template-areas: "choreText choreInput" "dayText dayDropDown" "picText picDropDown" "abortButton saveButton";
+  grid-template-areas: "choreText choreInput" "dayText dayDropDown" "picText picDropDown" "abortButton saveButton" "warning warning";
   grid-template-columns: 190px 1fr;
   justify-items: left;
   align-items: center;
   column-gap: 10px;
+}
+div.dialogContentAdd div.contentWrapper p.warning {
+  margin-top: 10px;
+  grid-area: warning;
 }
 div.dialogContentAdd div.contentWrapper p.choreText {
   grid-area: choreText;

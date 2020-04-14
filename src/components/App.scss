@@ -284,12 +284,18 @@ div.dialogContentAdd {
             "choreText choreInput"
             "dayText dayDropDown"
             "picText picDropDown"
-            "abortButton saveButton";
+            "abortButton saveButton"
+            "warning warning";
 
     grid-template-columns: 190px 1fr;
     justify-items: left;
     align-items: center;
     column-gap: 10px;
+
+    p.warning {
+      margin-top: 10px;
+      grid-area: warning;
+    }
 
     p.choreText {
       grid-area: choreText;
