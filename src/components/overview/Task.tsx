@@ -139,24 +139,26 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
       this.setState({ mouseDown: true });
 
   mouseUp = async () => {
-    const { currentHoverDay } = this.state;
+    const { currentHoverDay, mouseDown } = this.state;
     const { currentTask } = this.props;
 
-    if (this.taskToTrack) {
-      await this.taskToTrack.classList.remove(currentTask.day);
-      await this.taskToTrack.classList.remove(currentHoverDay);
-      this.taskToTrack.style.top = 0;
-      this.taskToTrack.style.left = 0;
-      this.taskToTrack.style.position = 'static';
+    if (mouseDown) {
+      if (this.taskToTrack) {
+        await this.taskToTrack.classList.remove(currentTask.day);
+        await this.taskToTrack.classList.remove(currentHoverDay);
+        this.taskToTrack.style.top = 0;
+        this.taskToTrack.style.left = 0;
+        this.taskToTrack.style.position = 'static';
 
-      if (currentTask.day !== currentHoverDay) {
-        this.taskToTrack.style.display = 'none';
+        if (currentTask.day !== currentHoverDay) {
+          this.taskToTrack.style.display = 'none';
+        }
       }
+
+      this.setState({ mouseDown: false });
+
+      await this.updateTaskComplete(currentHoverDay, currentTask.pic);
     }
-
-    this.setState({ mouseDown: false });
-
-    await this.updateTaskComplete(currentHoverDay, currentTask.pic);
   }
 
   trackMouse = (e: any) => {
@@ -179,8 +181,8 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
       }
 
       this.taskToTrack.style.position = 'absolute';
-      this.taskToTrack.style.left = `${e.pageX - this.taskToTrack.clientWidth / 2}px`;
-      this.taskToTrack.style.top = `${e.pageY - this.taskToTrack.clientHeight / 2}px`;
+      this.taskToTrack.style.left = `${e.pageX - this.taskToTrack.clientWidth + 40}px`;
+      this.taskToTrack.style.top = `${e.pageY - 70}px`;
     }
   }
 
@@ -198,9 +200,6 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
             className="Task"
             id={`Task-${currentTask.id}`}
             style={{ backgroundColor: colorToDisplay }}
-            onMouseMove={this.trackMouse}
-            onMouseDown={this.mouseDown}
-            onMouseUp={this.mouseUp}
         >
           <Typography className="chore" variant="body1">{currentTask.chore}</Typography>
           { currentTask.done ?
@@ -211,6 +210,14 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
           <ListIcon className="editIcon" onClick={this.handleOpen}/>
 
           <FeedbackIcon userIsNotPic={this.userIsNotPic} currentTask={currentTask} handleFeedbackOpen={this.handleFeedbackOpen} />
+
+          <div
+              className="dragIndicator"
+              onMouseMove={this.trackMouse}
+              onMouseDown={this.mouseDown}
+              onMouseUp={this.mouseUp}
+              onMouseLeave={this.mouseUp}
+          />
 
           <Typography className="day" variant="body2">{this.translateDayToGerman(currentTask.day)}</Typography>
           <Typography className="pic" variant="body2">{taskDone} von: {currentTask.pic}</Typography>
