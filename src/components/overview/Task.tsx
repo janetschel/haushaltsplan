@@ -148,7 +148,7 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
       this.taskToTrack.style.top = 0;
       this.taskToTrack.style.left = 0;
       this.taskToTrack.style.position = 'static';
-      
+
       if (currentTask.day !== currentHoverDay) {
         this.taskToTrack.style.display = 'none';
       }
