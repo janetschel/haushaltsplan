@@ -145,6 +145,13 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
     if (this.taskToTrack) {
       await this.taskToTrack.classList.remove(currentTask.day);
       await this.taskToTrack.classList.remove(currentHoverDay);
+      this.taskToTrack.style.top = 0;
+      this.taskToTrack.style.left = 0;
+      this.taskToTrack.style.position = 'static';
+      
+      if (currentTask.day !== currentHoverDay) {
+        this.taskToTrack.style.display = 'none';
+      }
     }
 
     this.setState({ mouseDown: false });
