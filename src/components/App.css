@@ -74,7 +74,7 @@ div.App div.Overview div.taskWrapper div.gridTask h6.columnHeading {
 }
 div.App div.Overview div.taskWrapper div.gridTask div.Task {
   display: grid;
-  grid-template-areas: "chore feedbackIcon toggleIcon editIcon" "day day day day" "pic pic pic pic" "blame blame blame blame";
+  grid-template-areas: "chore feedbackIcon toggleIcon editIcon" "day day dragIndicator dragIndicator" "pic pic dragIndicator dragIndicator" "blame blame dragIndicator dragIndicator";
   grid-template-columns: 215px 35px 35px 35px;
   transition: background-color 0.25s ease-in-out;
   user-select: none;
@@ -84,6 +84,16 @@ div.App div.Overview div.taskWrapper div.gridTask div.Task {
   border: 1px black solid;
   border-radius: 5px;
   margin-bottom: 10px;
+}
+div.App div.Overview div.taskWrapper div.gridTask div.Task div.dragIndicator {
+  grid-area: dragIndicator;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  transition: background-color 0.1s ease-in;
+}
+div.App div.Overview div.taskWrapper div.gridTask div.Task div.dragIndicator:hover {
+  cursor: pointer;
+  background-color: rgba(10, 10, 10, 0.05);
 }
 div.App div.Overview div.taskWrapper div.gridTask div.Task svg.toggle {
   grid-area: toggleIcon;
@@ -123,9 +133,6 @@ div.App div.Overview div.taskWrapper div.gridTask div.Task p {
 }
 div.App div.Overview div.taskWrapper div.gridTask div.Task span {
   margin: 5px;
-}
-div.App div.Overview div.taskWrapper div.gridTask div.Task:hover {
-  cursor: pointer;
 }
 div.App div.Overview div.headingWrapper {
   display: grid;
