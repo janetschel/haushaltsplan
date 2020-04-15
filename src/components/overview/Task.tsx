@@ -13,9 +13,10 @@ import CloseIcon from '@material-ui/icons/Close';
 import FeedbackIcon from "../feedback/FeedbackIcon";
 
 class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible: boolean, snackbarVisible: boolean,
-  snackbarMessage: string, updateDoneOfTaskDisabled: boolean }> {
+  snackbarMessage: string, updateDoneOfTaskDisabled: boolean, mouseDown: boolean, currentHoverDay: string }> {
 
   private editDialogKey: number;
+  private taskToTrack: any;
   private _isMounted: boolean;
 
   constructor({props}: { props: any }) {
@@ -23,13 +24,16 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
 
     this.editDialogKey = 0;
     this._isMounted = false;
+    this.taskToTrack = null;
 
     this.state = {
       isVisible: false,
       feedbackVisible: false,
       snackbarVisible: false,
       updateDoneOfTaskDisabled: false,
+      mouseDown: false,
       snackbarMessage: 'Feedback erfolgreich hinzugefügt',
+      currentHoverDay: '',
     };
 
     this.handleClose = this.handleClose.bind(this);
@@ -43,7 +47,10 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
   }
 
   componentDidMount(): void {
+    const { currentTask } = this.props;
+
     this._isMounted = true;
+    this.setState({ currentHoverDay: currentTask.day });
   }
 
   componentWillUnmount(): void {
@@ -128,6 +135,55 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
   handleSnackbarClose = async () =>
       await this.setState({ snackbarVisible: false });
 
+  mouseDown = () =>
+      this.setState({ mouseDown: true });
+
+  mouseUp = async () => {
+    const { currentHoverDay } = this.state;
+    const { currentTask } = this.props;
+
+    if (this.taskToTrack) {
+      await this.taskToTrack.classList.remove(currentTask.day);
+      await this.taskToTrack.classList.remove(currentHoverDay);
+      this.taskToTrack.style.top = 0;
+      this.taskToTrack.style.left = 0;
+      this.taskToTrack.style.position = 'static';
+
+      if (currentTask.day !== currentHoverDay) {
+        this.taskToTrack.style.display = 'none';
+      }
+    }
+
+    this.setState({ mouseDown: false });
+
+    await this.updateTaskComplete(currentHoverDay, currentTask.pic);
+  }
+
+  trackMouse = (e: any) => {
+    const { mouseDown } = this.state;
+    const { currentTask, weekdays } = this.props;
+
+    if (mouseDown) {
+      if (this.taskToTrack === null) {
+        this.taskToTrack = document.getElementById(`Task-${currentTask.id}`)!;
+      }
+
+      const elementMouseIsOver = document.elementsFromPoint(e.clientX, e.clientY).filter(currentElement => {
+        const classListOfElement = currentElement.classList[0];
+        return weekdays.includes(classListOfElement)
+      })[0];
+
+      if (typeof elementMouseIsOver !== 'undefined') {
+        const day = elementMouseIsOver.classList[0];
+        this.setState({ currentHoverDay: day });
+      }
+
+      this.taskToTrack.style.position = 'absolute';
+      this.taskToTrack.style.left = `${e.pageX - this.taskToTrack.clientWidth / 2}px`;
+      this.taskToTrack.style.top = `${e.pageY - this.taskToTrack.clientHeight / 2}px`;
+    }
+  }
+
   render() {
     const { isVisible, feedbackVisible, snackbarVisible, snackbarMessage } = this.state;
     const { currentTask, createNewTaskFromOldTask, username } = this.props;
@@ -138,7 +194,14 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
     this.editDialogKey++;
 
     return (
-        <div className="Task" style={{ backgroundColor: colorToDisplay }}>
+        <div
+            className="Task"
+            id={`Task-${currentTask.id}`}
+            style={{ backgroundColor: colorToDisplay }}
+            onMouseMove={this.trackMouse}
+            onMouseDown={this.mouseDown}
+            onMouseUp={this.mouseUp}
+        >
           <Typography className="chore" variant="body1">{currentTask.chore}</Typography>
           { currentTask.done ?
               <ToggleOnIcon className="toggle" onClick={this.toggleDoneOfTask} /> :
@@ -197,6 +260,7 @@ type Props = {
   authtoken: string,
   getTasks: () => void,
   username: string,
+  weekdays: [string, string, string, string, string, string, string],
 }
 
 export default Task;

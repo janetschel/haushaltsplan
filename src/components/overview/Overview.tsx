@@ -60,7 +60,7 @@ class Overview extends React.Component<Props,
   scrollCurrentTasksOfDayIntoView = () => {
     const currentDay = DayUtil.getDayOfWeekFromCorrespondingNumber((new Date()).getUTCDay())!;
     const element = document.getElementById(currentDay)!;
-    element.scrollIntoView({behavior: "smooth", block: "end", inline: "center"});
+    element.scrollIntoView({behavior: "smooth", block: "start", inline: "center"});
   };
 
   setAuthToken = async () => {
@@ -185,6 +185,7 @@ class Overview extends React.Component<Props,
                             getTasks={this.getTasks}
                             username={username}
                             createNewTaskFromOldTask={this.createNewTaskFromOldTask}
+                            weekdays={weekdays}
                         />
                     )}
                   </div>
