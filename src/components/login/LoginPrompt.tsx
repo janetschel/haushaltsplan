@@ -1,30 +1,32 @@
 import React from 'react';
 import {Button, TextField, Typography, CircularProgress } from '@material-ui/core';
 
-class LoginPrompt extends React.Component<Props, { loggingIn: boolean, falseCredentials: boolean }> {
+class LoginPrompt extends React.Component<Props, { loggingIn: boolean, flaseCredentials: boolean, }> {
   constructor({props}: { props: any }) {
     super(props);
 
     this.state = {
       loggingIn: false,
-      falseCredentials: false,
+      flaseCredentials: false,
     }
   }
 
   userRequestingLogIn = async () => {
-    const { userLoggingIn } = this.props;
+    const { userLoggingIn, loginExpired } = this.props;
 
     this.setState({ loggingIn: true });
-    this.setState({ falseCredentials: false });
+    this.setState({ flaseCredentials: false });
 
     const username = (document.getElementById('username') as HTMLInputElement).value;
     const password = (document.getElementById('password') as HTMLInputElement).value;
 
-    const userIsLoggedIn = await userLoggingIn(username, password);
+    const response = await userLoggingIn(username, password);
 
-    if (!userIsLoggedIn) {
+    if (response === 'falseCredentials') {
       this.setState({ loggingIn: false });
-      this.setState({ falseCredentials: true });
+      this.setState({ flaseCredentials: true });
+    } else if (response === 'loginExpired') {
+      loginExpired();
     }
   };
 
@@ -35,7 +37,7 @@ class LoginPrompt extends React.Component<Props, { loggingIn: boolean, falseCred
   };
 
   render() {
-    const { loggingIn, falseCredentials } = this.state;
+    const { loggingIn, flaseCredentials } = this.state;
 
     return (
         <div className="LoginPrompt">
@@ -53,14 +55,15 @@ class LoginPrompt extends React.Component<Props, { loggingIn: boolean, falseCred
           <Button className="loginButton" variant="outlined" onClick={this.userRequestingLogIn}>Einloggen</Button>
           <br />
           { loggingIn && <CircularProgress className="waitingForLoginResponse"/> }
-          { falseCredentials && <Typography color="secondary">Benutzername und/oder Passwort falsch!</Typography> }
+          { flaseCredentials && <Typography color="secondary">Benutzername und/oder Passwort falsch!</Typography> }
         </div>
     );
   }
 }
 
 type Props = {
-  userLoggingIn: (username: string, password: string) => Promise<boolean>,
+  userLoggingIn: (username: string, password: string) => Promise<string>,
+  loginExpired: () => void,
 }
 
 export default LoginPrompt;

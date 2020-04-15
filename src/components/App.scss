@@ -18,6 +18,43 @@ div.App {
     }
   }
 
+  div.LoginExpired {
+    margin: 10px;
+    white-space: nowrap;
+
+    h6.explanation {
+      margin-top: 10px;
+    }
+
+    div.linkWrapper {
+      display: grid;
+      grid-template-areas: "text link";
+      grid-template-columns: 387px 1fr;
+      grid-gap: 1px;
+
+      margin: 20px 0;
+      color: darkgray;
+
+      p.manual {
+        grid-area: text;
+      }
+
+      p.button {
+        grid-area: link;
+        text-decoration: underline;
+
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    div.loadingIcon {
+      margin-top: 10px;
+    }
+  }
+
   div.Overview {
     div.taskWrapper {
       overflow: scroll;

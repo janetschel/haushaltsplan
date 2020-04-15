@@ -61,7 +61,7 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
 
   toggleDoneOfTask = async () => {
     const { updateDoneOfTaskDisabled } = this.state;
-    const { currentTask, authtoken } = this.props;
+    const { currentTask, authtoken, loginExpired } = this.props;
 
     if (updateDoneOfTaskDisabled) {
       return;
@@ -70,28 +70,48 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
     await this.setState({ updateDoneOfTaskDisabled: true });
 
     currentTask.done = !currentTask.done;
-    await Api.updateDocument(currentTask, authtoken)
-        .catch(error => console.error(error));
+
+    try {
+      await Api.updateDocument(currentTask, authtoken);
+    } catch (error) {
+      if (error.message === 'User is not logged in') {
+        loginExpired();
+        return;
+      }
+    }
 
     this.updateTasks();
   };
 
   deleteTask = async () => {
-    const { currentTask, authtoken } = this.props;
+    const { currentTask, authtoken, loginExpired } = this.props;
 
-    await Api.deleteDocument(currentTask.id, authtoken)
-        .catch(error => console.error(error));
+    try {
+      await Api.deleteDocument(currentTask.id, authtoken);
+    } catch (error) {
+      if (error.message === 'User is not logged in') {
+        loginExpired();
+      }
+    }
   };
 
   updateTaskComplete = async (day: string, pic: string) => {
-    const { currentTask, authtoken, username, getTasks } = this.props;
+    const { currentTask, authtoken, username, getTasks, loginExpired } = this.props;
 
     currentTask.day = day;
     currentTask.pic = pic;
     currentTask.blame = username.startsWith('jan') ? 'Jan' : 'Lea';
     currentTask.feedback = Feedback.NO_FEEDBACK_GIVEN;
 
-    await Api.updateDocument(currentTask, authtoken);
+    try {
+      await Api.updateDocument(currentTask, authtoken);
+    } catch (error) {
+      if (error.message === 'User is not logged in') {
+        loginExpired();
+        return;
+      }
+    }
+
     await getTasks();
   };
 
@@ -102,9 +122,17 @@ class Task extends React.Component<Props, { isVisible: boolean, feedbackVisible:
   };
 
   addFeedbackToTask = async (feedback: Feedback) => {
-    const { currentTask, authtoken } = this.props;
+    const { currentTask, authtoken, loginExpired } = this.props;
 
-    await Api.addFeedbackToDocument(currentTask.id, feedback, authtoken);
+    try {
+      await Api.addFeedbackToDocument(currentTask.id, feedback, authtoken);
+    } catch (error) {
+      if (error.message === 'User is not logged in') {
+        loginExpired();
+        return;
+      }
+    }
+
     await this.setState({ snackbarMessage: 'Feedback erfolgreich hinzugefügt' });
     await this.setState({ snackbarVisible: true });
   }
@@ -268,6 +296,7 @@ type Props = {
   getTasks: () => void,
   username: string,
   weekdays: [string, string, string, string, string, string, string],
+  loginExpired: () => void,
 }
 
 export default Task;

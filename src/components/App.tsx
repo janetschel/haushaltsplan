@@ -1,10 +1,12 @@
 import React from 'react';
 import Overview from './overview/Overview';
 import LoginPrompt from './login/LoginPrompt';
+import LoginExpired from './login/LoginExpired';
 import './App.css';
 import Api from "../api/Api";
 
-class App extends React.Component<{}, { tasks: [], userIsLoggedIn: boolean, authtoken: string, username: string }> {
+class App extends React.Component<{}, { tasks: [], userIsLoggedIn: boolean,
+  authtoken: string, username: string, loginExpired:boolean }> {
   constructor({props}: { props: any }) {
     super(props);
 
@@ -16,9 +18,11 @@ class App extends React.Component<{}, { tasks: [], userIsLoggedIn: boolean, auth
       userIsLoggedIn: false,
       authtoken: '',
       username: '',
+      loginExpired: false,
     };
 
     this.userLoggingIn = this.userLoggingIn.bind(this);
+    this.loginExpired = this.loginExpired.bind(this);
   }
 
   wakeup = async () => {
@@ -32,24 +36,44 @@ class App extends React.Component<{}, { tasks: [], userIsLoggedIn: boolean, auth
 
     if (!validInformation) {
       await this.setState({ userIsLoggedIn: false });
-      return false;
+      return 'falseCredentials';
     }
 
-    const authtoken = await(await Api.getAuthToken(base64String)).text();
+    let response: any;
+    try {
+      response = await Api.getAuthToken(base64String);
+    } catch (error) {
+      await this.setState({ userIsLoggedIn: false });
+      return 'loginExpired';
+    }
+
+    const authtoken = await response!.text();
     await this.setState({ username: username });
     await this.setState({ authtoken: authtoken });
     await this.setState({ userIsLoggedIn: true });
-    return true;
+
+    return 'true';
   };
 
+  loginExpired = async () => {
+    await this.setState({ userIsLoggedIn: false });
+    await this.setState({ loginExpired: true });
+    await this.delay(15000);
+    await this.setState({ loginExpired: false });
+  };
+
+  delay = (ms: number) => {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   render() {
-    const { userIsLoggedIn, authtoken, username } = this.state;
+    const { userIsLoggedIn, loginExpired, authtoken, username } = this.state;
 
     return(
       <div className="App">
-        { userIsLoggedIn ?
-            <Overview authtoken={authtoken} username={username}/> :
-            <LoginPrompt userLoggingIn={this.userLoggingIn} />
+        { loginExpired ? <LoginExpired /> : (userIsLoggedIn ?
+            <Overview loginExpired={this.loginExpired} authtoken={authtoken} username={username}/> :
+            <LoginPrompt loginExpired={this.loginExpired} userLoggingIn={this.userLoggingIn} />)
         }
       </div>
     );
