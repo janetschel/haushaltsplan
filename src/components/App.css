@@ -15,6 +15,34 @@ div.App div.LoginPrompt div.username, div.App div.LoginPrompt div.password {
 div.App div.LoginPrompt button.loginButton {
   margin: 20px 0;
 }
+div.App div.LoginExpired {
+  margin: 10px;
+  white-space: nowrap;
+}
+div.App div.LoginExpired h6.explanation {
+  margin-top: 10px;
+}
+div.App div.LoginExpired div.linkWrapper {
+  display: grid;
+  grid-template-areas: "text link";
+  grid-template-columns: 387px 1fr;
+  grid-gap: 1px;
+  margin: 20px 0;
+  color: darkgray;
+}
+div.App div.LoginExpired div.linkWrapper p.manual {
+  grid-area: text;
+}
+div.App div.LoginExpired div.linkWrapper p.button {
+  grid-area: link;
+  text-decoration: underline;
+}
+div.App div.LoginExpired div.linkWrapper p.button:hover {
+  cursor: pointer;
+}
+div.App div.LoginExpired div.loadingIcon {
+  margin-top: 10px;
+}
 div.App div.Overview div.taskWrapper {
   overflow: scroll;
   margin-top: 40px;

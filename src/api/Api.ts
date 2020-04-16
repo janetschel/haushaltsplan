@@ -19,6 +19,10 @@ const request = async (path: string, method: RequestMethods, authtoken: string) 
     throw new Error("Request rejected due to auth-token invalid or missing");
   }
 
+  if (response.status === 401) {
+    throw new Error('User is not logged in');
+  }
+
   return response;
 };
 
@@ -43,6 +47,10 @@ const requestWithBody = async (path: string, method: RequestMethods, body: any, 
     throw new Error("Request rejected due to auth-token invalid or missing");
   }
 
+  if (response.status === 401) {
+    throw new Error('User is not logged in');
+  }
+
   return response;
 };
 
@@ -60,12 +68,18 @@ const login = async (base64String: string) => {
 const getAuthToken = async (base64String: string) => {
   const fetchUrl = `${backendUrl}/getAuthToken`;
 
-  return await fetch(fetchUrl, {
+  const response = await fetch(fetchUrl, {
     method: RequestMethods.GET,
     headers: {
       'Auth-String': base64String
     }
   });
+
+  if (response.status === 401) {
+    throw new Error('User is not logged in');
+  }
+
+  return response;
 };
 
 const healthCheck = async () =>

@@ -70,6 +70,7 @@ class Overview extends React.Component<Props,
 
   getTasks = async () => {
     const { authtoken } = this.state;
+    const { loginExpired } = this.props;
 
     try {
       const tasks = await (await Api.getDocuments(authtoken)).json();
@@ -78,6 +79,10 @@ class Overview extends React.Component<Props,
     } catch (error) {
       console.error(error);
       await this.setState({ error: true });
+
+      if (error.message === 'User is not logged in') {
+        loginExpired();
+      }
     }
   };
 
@@ -85,6 +90,8 @@ class Overview extends React.Component<Props,
       async (oldId: string, day: string, chore: string, pic: string, blame: string, done: boolean) => {
 
     const { authtoken } = this.state;
+    const { loginExpired } = this.props;
+
     const dayForNewDocument = DayUtil.getDayTwoDaysFromDay(day);
 
     const newDocument = {
@@ -95,15 +102,24 @@ class Overview extends React.Component<Props,
       done: false
     };
 
-    await Api.addDocument(newDocument, authtoken);
+    try {
+      await Api.addDocument(newDocument, authtoken);
 
-    if (done) {
-      await Api.deleteDocument(oldId, authtoken);
+      if (done) {
+        await Api.deleteDocument(oldId, authtoken);
+      }
+    } catch (error) {
+      if (error.message === 'User is not logged in') {
+        loginExpired();
+        return;
+      }
     }
   };
 
   createNewTask = async (chore: string, day: string, pic: string) => {
     const { authtoken, username } = this.state;
+    const { loginExpired } = this.props;
+
     const blame = username.startsWith('jan') ? 'Jan' : 'Lea';
 
     const newDocument = {
@@ -114,7 +130,15 @@ class Overview extends React.Component<Props,
       done: false,
     };
 
-    await Api.addDocument(newDocument, authtoken);
+    try {
+      await Api.addDocument(newDocument, authtoken);
+    } catch (error) {
+      if (error.message === 'User is not logged in') {
+        loginExpired();
+        return;
+      }
+    }
+
     await this.getTasks();
   };
 
@@ -147,6 +171,10 @@ class Overview extends React.Component<Props,
       weekdays,
       initialFetchComplete
     } = this.state;
+
+    const {
+      loginExpired
+    } = this.props;
 
     this.addTaskDialogKey++;
 
@@ -186,6 +214,7 @@ class Overview extends React.Component<Props,
                             username={username}
                             createNewTaskFromOldTask={this.createNewTaskFromOldTask}
                             weekdays={weekdays}
+                            loginExpired={loginExpired}
                         />
                     )}
                   </div>
@@ -208,6 +237,7 @@ class Overview extends React.Component<Props,
 type Props = {
   authtoken: string,
   username: string,
+  loginExpired: () => void,
 }
 
 export default Overview;

@@ -6,13 +6,25 @@ import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutli
 import Feedback from "../enums/Feedback";
 
 class EditDialog extends React.Component<Props, { deleteTaskDisabled: boolean, moveTaskDisabled: boolean }> {
+  private _isMounted: boolean;
+
   constructor({props}: { props: any }) {
     super(props);
+
+    this._isMounted = false;
 
     this.state = {
       deleteTaskDisabled: false,
       moveTaskDisabled: false,
     }
+  }
+
+  componentDidMount(): void {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount(): void {
+    this._isMounted = false;
   }
 
   handleClose = () => {
@@ -33,7 +45,7 @@ class EditDialog extends React.Component<Props, { deleteTaskDisabled: boolean, m
     await this.setState({ moveTaskDisabled: true });
 
     await deleteTask();
-    this.handleClose();
+    this._isMounted && this.handleClose();
   };
 
   moveTask = async () => {
@@ -51,7 +63,7 @@ class EditDialog extends React.Component<Props, { deleteTaskDisabled: boolean, m
     const blame = username.startsWith('jan') ? 'Jan' : 'Lea';
 
     await createNewTaskFromOldTask(currentTask.id, day, chore, pic, blame, currentTask.done);
-    this.handleClose();
+    this._isMounted && this.handleClose();
   };
 
   render() {
