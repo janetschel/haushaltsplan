@@ -15,8 +15,12 @@ class AddTaskDialog extends React.Component<Props, {
   weekdays: [string, string, string, string, string, string, string],
   currentWeekday: string, pics: [string, string], currentPic: string, inputDisabled: boolean, showMessage: boolean, }>{
 
+  private _isMounted: boolean;
+
   constructor({props}: { props: any }) {
     super(props);
+
+    this._isMounted = false;
 
     this.state = {
       weekdays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
@@ -26,6 +30,14 @@ class AddTaskDialog extends React.Component<Props, {
       inputDisabled: false,
       showMessage: false,
     }
+  }
+
+  componentDidMount(): void {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount(): void {
+    this._isMounted = false;
   }
 
   translateDay = (dayToTranslate: string) =>
@@ -57,7 +69,7 @@ class AddTaskDialog extends React.Component<Props, {
     await this.setState({ showMessage: false });
     await createNewTask(chore, currentWeekday, currentPic);
 
-    this.handleClose();
+    this._isMounted && this.handleClose();
   };
 
   handleDayChange = async (e: any) =>
